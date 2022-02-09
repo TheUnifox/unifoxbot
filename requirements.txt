@@ -1,0 +1,15 @@
+beautifulsoup4
+soupsieve
+aiohttp
+requests
+discord.py
+Flask
+youtube-dl
+PyNaCl
+ffmpeg
+urllib3
+certifi
+chardet
+idna
+charset-normalizer
+idna
