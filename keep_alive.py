@@ -24,7 +24,7 @@ def home():
 def run():
   app.run(
 		host='0.0.0.0',
-		port=random.randint(2000,9000)
+		port=os.environ.get('PORT')
 	)
 
 #used to get things setup and running to be pinged from a web service to keep it running
