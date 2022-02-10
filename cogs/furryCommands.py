@@ -55,15 +55,15 @@ class NSFWFurryCommands(commands.Cog, name="NSFW Furry Commands", description="T
 	@commands.command(name='yiff', help='Searches e621.net based off a search term')
 	async def yiff(self, ctx, *, search='gay'):
 		if search == None:
-			tosearch=gay
+			tosearch='gay'
 		else:
 			tosearch=search
 		keywords, searchwords = GoogleSearch.key_words_search_words(GoogleSearch, user_message=tosearch)
-		print(f'got keywords, {keywords}')
+		print(f'got keywords: {keywords} \n from {search}')
 		cs = aiohttp.ClientSession()
 		print('got client session')
 		headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36"}
-		r = await cs.get(f"https://e621.net/posts.json?tags={keywords}+order:score", headers=headers)
+		r = await cs.get(f'https://e621.net/posts.json?tags={keywords}+order:score', headers=headers)
 		print('got e6 link')
 		print(r)
 		cs.close()
