@@ -54,7 +54,11 @@ class FurryCommands(commands.Cog, name="Furry Commands", description="Commands f
 class NSFWFurryCommands(commands.Cog, name="NSFW Furry Commands", description="The fun commands for furries ;)"):
 	@commands.command(name='yiff', help='Searches e621.net based off a search term')
 	async def yiff(self, ctx, *, search='gay'):
-		keywords, searchwords = GoogleSearch.key_words_search_words(GoogleSearch, user_message=search)
+                if search == None:
+                        tosearch=gay
+                else:
+                        tosearch=search
+		keywords, searchwords = GoogleSearch.key_words_search_words(GoogleSearch, user_message=tosearch)
 		print(f'got keywords, {keywords}')
 		cs = aiohttp.ClientSession()
 		print('got client session')
@@ -62,6 +66,7 @@ class NSFWFurryCommands(commands.Cog, name="NSFW Furry Commands", description="T
 		r = await cs.get(f"https://e621.net/posts.json?tags={keywords}+order:score", headers=headers)
 		print('got e6 link')
 		print(r)
+		cs.close()
 		data = await r.json(content_type=None)
 		post = random.choice(data['posts'])
 		file = post['file']
