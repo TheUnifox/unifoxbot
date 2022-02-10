@@ -56,9 +56,9 @@ class NSFWFurryCommands(commands.Cog, name="NSFW Furry Commands", description="T
 	async def yiff(self, ctx, *, search='gay'):
 		keywords, searchwords = GoogleSearch.key_words_search_words(GoogleSearch, user_message=search)
 		print(f'got keywords, {keywords}')
-		cs = await aiohttp.ClientSession()
+		cs = aiohttp.ClientSession('https://e621.net/')
 		print('got client session')
-		r = await cs.get("https://e621.net/posts.json?tags=gay")
+		r = await cs.get("posts.json?tags=gay")
 		print('got e6 link')
 		data = await r.json()
 		post = random.choice(data['posts'])
