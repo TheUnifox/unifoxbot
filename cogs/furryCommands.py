@@ -66,12 +66,16 @@ class NSFWFurryCommands(commands.Cog, name="NSFW Furry Commands", description="T
 		r = await cs.get(f'https://e621.net/posts.json?tags={keywords}+order:score', headers=headers)
 		print('got e6 link')
 		print(r)
-		cs.close()
+		await cs.close()
 		data = await r.json(content_type=None)
+		dump = open('filedump.json', 'wb')
+		dump.write(data)
+		dump.close()
 		post = random.choice(data['posts'])
 		file = post['file']
 		embed = discord.Embed(title="e621: "+search, color = ctx.author.color)
 		embed.set_image(url=file['url'])
+		print(file['url'])
 		await ctx.send(embed=embed)
 
 
