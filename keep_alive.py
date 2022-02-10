@@ -7,6 +7,7 @@
 from flask import Flask
 from threading import Thread
 import random
+import os
 
 #get a flask to run
 app = Flask('Unifox Discord Bot')
