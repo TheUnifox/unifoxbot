@@ -6,6 +6,7 @@ import random
 from main import Main
 import discord
 from discord.ext import commands
+import json
 
 class FurryCommands(commands.Cog, name="Furry Commands", description="Commands for furries ;)"):
 	@commands.command(name='glomp', help='glomp on someone ;)')
@@ -68,8 +69,9 @@ class NSFWFurryCommands(commands.Cog, name="NSFW Furry Commands", description="T
 		print(r)
 		await cs.close()
 		data = await r.json(content_type=None)
-		dump = open('filedump.json', 'wb')
-		dump.write(bytes(data))
+		dump = open('filedump.json', 'w')
+		datadump = json.dumps(data, indent=2).encode('utf-8')
+		dump.write(data)
 		dump.close()
 		post = random.choice(data['posts'])
 		file = post['file']
