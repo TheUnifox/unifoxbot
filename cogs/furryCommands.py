@@ -60,7 +60,8 @@ class NSFWFurryCommands(commands.Cog, name="NSFW Furry Commands", description="T
 		print('got client session')
 		r = await cs.get("https://e621.net/posts.json?tags=gay")
 		print('got e6 link')
-		data = await r.json()
+		print(r)
+		data = await r.json(content_type=None)
 		post = random.choice(data['posts'])
 		file = post['file']
 		embed = discord.Embed(title="e621: "+search, color = ctx.author.color)
