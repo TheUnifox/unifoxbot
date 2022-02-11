@@ -72,8 +72,7 @@ class NSFWFurryCommands(commands.Cog, name="NSFW Furry Commands", description="T
 		dump = open('filedump.json', 'w')
 		datadump = json.dumps(data)
 		binary = ' '.join(format(ord(letter), 'b') for letter in datadump)
-		print(binary)
-		dump.write(data)
+		dump.write(datadump)
 		dump.close()
 		post = random.choice(data['posts'])
 		file = post['file']
