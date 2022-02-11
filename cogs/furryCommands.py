@@ -70,6 +70,7 @@ class NSFWFurryCommands(commands.Cog, name="NSFW Furry Commands", description="T
 		print(datadump)
 		dump.write(datadump)
 		dump.close()
+		print(len(data['posts']))
 		if len(data['posts']) == 0:
                         return await ctx.send('No results!')
 		post = random.choice(data['posts'])
