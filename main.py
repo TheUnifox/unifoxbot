@@ -31,9 +31,7 @@ class Main():
 		strip_after_prefix=True
 	)
 
-	bot.help_command = NewHelpName()
-
-	bot.ses = aiohttp.ClientSession()
+	bot.ses = aiohttp.ClientSession()#get a client session for sumn idk
 
 	#this is to tell discord who made it
 	bot.author_id = 448846699692032006  # Change to your discord id!!!
