@@ -67,15 +67,15 @@ class NSFWFurryCommands(commands.Cog, name="NSFW Furry Commands", description="T
 		print(len(data['posts']))
 		data = await r.json(content_type=None)
 		if len(data['posts']) == 0:
-                        return await ctx.send('No results!')
+			return await ctx.send('No results!')
 		post = random.choice(data['posts'])
 		file = post['file']
 		if file['ext'] == 'webm' or file['ext'] == 'mp4':
-                        embed = discord.Embed(title="e621: "+search, color = ctx.author.color, type='video')
-                        embed.video.url = file['url']
-                else:
-                        embed = discord.Embed(title="e621: "+search, color = ctx.author.color, type='image')
-                        embed.image.url = file['url']
+			embed = discord.Embed(title="e621: "+search, color = ctx.author.color, type='video')
+			embed.video.url = file['url']
+		else:
+			embed = discord.Embed(title="e621: "+search, color = ctx.author.color, type='image')
+			embed.image.url = file['url']
 		print(file['url'])
 		await ctx.send(embed=embed)
 
