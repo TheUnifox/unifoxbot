@@ -260,6 +260,7 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 	async def listannounce(self, ctx):
 		await ctx.send(BotSettings.announceChannels)
 
+	#add channel to no be cleared on server clear
 	@commands.command(name='addClearIgnore', help='adds a channel to be ignored upon serverwipe', aliases=['aci'])
 	@commands.has_any_role('admin', 'owner')
 	async def addClearIgnore(self, ctx, *, channel):
@@ -267,6 +268,7 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 		BotSettings.quietSave()
 		await ctx.send(f"{channel} won't be cleared")
 
+	#remove server from list that won't be cleared
 	@commands.command(name='delClearIgnore', help='removes a channel from being ignored upon serverwipe', aliases=['dci'])
 	@commands.has_any_role('admin', 'owner')
 	async def delClearIgnore(self, ctx, *, channelid: int):
@@ -274,6 +276,7 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 		BotSettings.clearIgnore.pop(channelid)
 		BotSettings.quietSave()
 
+#and list the channels that won't be cleared
 	@commands.command(name='listClearIgnore', help='lists the clear ignored channels', aliases=['lci'])
 	@commands.has_any_role('admin', 'owner')
 	async def listClearIgnore(self, ctx):

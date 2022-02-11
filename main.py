@@ -20,23 +20,6 @@ from discord.utils import get
 from discord.ext import commands, tasks
 from discord.ext.commands import has_permissions, CheckFailure, check
 
-class NewHelpName(commands.MinimalHelpCommand):
-	async def send_pages(self, *, category=None):
-		destination = self.get_destination()
-		if category == None:
-			embed = discord.Embed(title='Help!', description='These are the categories.', colour=discord.Colour.red())
-			print(Main.bot.cogs)
-			for cog in Main.bot.cogs:
-				print(cog)
-				embed.add_field(name=cog, value=Main.bot.cogs[cog].description)
-			embed.set_footer(text='type (prefix)help (category) for info on a category \neg. h!help furry')
-		else:
-			embed = discord.Embed(title='Help!', description=f'Commands in {category}', colour=discord.Colour.red())
-			for command in Main.bot.cogs[category]:
-				print(command)
-				embed.add_field(name=command, value=Main.bot.command.description)
-		await destination.send(embed=embed)
-
 #---main class---#
 #this houses most of this files stuff
 class Main():
@@ -166,6 +149,7 @@ class Main():
 	#it checks to see if the channel should be ignored
 	#then if the message was sent by this bot
 	#then if any word in the message is in a blacklist of bad words
+	#now check if its a help command and deal with it here
 	@bot.event
 	async def on_message(message):
 		if message.channel.name.lower() in BotSettings.ignoreChannels:

@@ -1,3 +1,7 @@
+#Unifox Discord Bot
+#FurryCommands.py
+
+#---Imports Section---
 from googleSearch import GoogleSearch
 import aiohttp
 import ssl
@@ -8,7 +12,11 @@ import discord
 from discord.ext import commands
 import json
 
+#---furry commands class---
+#houses all the commands for furries :)
 class Furry(commands.Cog, name="Furry Commands", description="Commands for furries ;)"):
+
+	#command to glomp on someone lol
 	@commands.command(name='glomp', help='glomp on someone ;)')
 	async def glomp(self, ctx, *, user: discord.Member):
 		try:
@@ -16,6 +24,7 @@ class Furry(commands.Cog, name="Furry Commands", description="Commands for furri
 		except:
 			await ctx.send('Sorry, idk that person.')
 
+	#a basic hug uwu
 	@commands.command(name='hug', help='hug someone')
 	async def hug(self, ctx, *, user: discord.Member):
 		try:
@@ -23,6 +32,7 @@ class Furry(commands.Cog, name="Furry Commands", description="Commands for furri
 		except:
 			await ctx.send('Sorry, idk them.')
 
+	#pet someone
 	@commands.command(name='pet', help='pet someone')
 	async def pet(self, ctx, *, user: discord.Member):
 		try:
@@ -30,13 +40,17 @@ class Furry(commands.Cog, name="Furry Commands", description="Commands for furri
 		except:
 			await ctx.send('Couldn\'t find the person to pet...')
 
+	#make everyone deaf lol
 	@commands.command(name='scream', help='just fox scream lol')
 	async def scree(self, ctx):
 		await ctx.send(f'{ctx.author.mention}, if not already, turns into a fox. They then let out a loud screeeeeee. Everyone at this channel is now temporarily deaf, and the scream can be heard in all channels through this server. Don\'t be mad at me, it was {ctx.author.mention} who did it.')
 
+	#furpile tracking vars
 	furpilestarted = False
 	furpilecount = 0
 
+	#start, join, or bring someone to a furpile
+	#I still need to add a timeout to end the pile if no one does anything with it
 	@commands.command(name='furpile', help='Join or make a furpile :)')
 	async def furpile(self, ctx, *, user: discord.Member=None):
 		if user == None and FurryCommands.furpilestarted == False:
@@ -52,7 +66,15 @@ class Furry(commands.Cog, name="Furry Commands", description="Commands for furri
 			await ctx.send(f'{ctx.author.mention} joined, bringing {user.mention} with them')
 			FurryCommands.furpilecount += 2
 
+#---NSFW furry commands class ;)---
+#houses all the fun furry commands
 class NSFWFurryCommands(commands.Cog, name="NSFW Furry Commands", description="The fun commands for furries ;)"):
+
+	#a yiff command for searching e621
+	#gets a big list of posts that have tag(s) that were searched for from e621
+	#if the list is empty is says so
+	#but if its not, it selects a random post and sends it
+	#makes sure the post isn't a webm, because I couldn't get it working with webm video
 	@commands.command(name='yiff', help='Searches e621.net based off a search term')
 	async def yiff(self, ctx, *, search='gay'):
 		if ctx.channel.is_nsfw():
@@ -82,6 +104,8 @@ class NSFWFurryCommands(commands.Cog, name="NSFW Furry Commands", description="T
 		else:
 			await ctx.send('Command must be used in nsfw channel!!!')
 
+#---setup function---
+#sets up the cogs ig idk
 def setup(bot):
 	bot.add_cog(Furry(bot))
 	bot.add_cog(NSFWFurryCommands(bot))
