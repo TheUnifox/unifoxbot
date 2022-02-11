@@ -65,11 +65,6 @@ class NSFWFurryCommands(commands.Cog, name="NSFW Furry Commands", description="T
 		print('got e6 link')
 		await cs.close()
 		data = await r.json(content_type=None)
-		dump = open('filedump.json', 'w')
-		datadump = json.dumps(data)
-		print(datadump)
-		dump.write(datadump)
-		dump.close()
 		print(len(data['posts']))
 		if len(data['posts']) == 0:
                         return await ctx.send('No results!')
