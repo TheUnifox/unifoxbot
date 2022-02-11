@@ -64,8 +64,8 @@ class NSFWFurryCommands(commands.Cog, name="NSFW Furry Commands", description="T
 		r = await cs.get(f'https://e621.net/posts.json?tags={keywords}+order:score&limit=10', headers=headers)
 		print('got e6 link')
 		await cs.close()
-		data = await r.json(content_type=None)
 		print(len(data['posts']))
+		data = await r.json(content_type=None)
 		if len(data['posts']) == 0:
                         return await ctx.send('No results!')
 		post = random.choice(data['posts'])
