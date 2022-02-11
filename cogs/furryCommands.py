@@ -55,30 +55,32 @@ class FurryCommands(commands.Cog, name="Furry Commands", description="Commands f
 class NSFWFurryCommands(commands.Cog, name="NSFW Furry Commands", description="The fun commands for furries ;)"):
 	@commands.command(name='yiff', help='Searches e621.net based off a search term')
 	async def yiff(self, ctx, *, search='gay'):
-		tosearch=search
-		keywords, searchwords = GoogleSearch.key_words_search_words(GoogleSearch, user_message=tosearch)
-		print(f'got keywords: {keywords}\n from {search}')
-		cs = aiohttp.ClientSession()
-		print('got client session')
-		headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36"}
-		r = await cs.get(f'https://e621.net/posts.json?tags={keywords}+order:score+type:jpg+type:png&limit=50', headers=headers)
-		print('got e6 link')
-		print(r.status)
-		if r.status == 200:
-			data = await r.json(content_type=None)
-			print(len(data['posts']))
-			if len(data['posts']) == 0:
-				return await ctx.send('No results!')
-			post = random.choice(data['posts'])
-			file = post['file']
-			embed = discord.Embed(title="e621: "+search, color = ctx.author.color)
-			embed.set_image(url=file['url'])
-			await ctx.send(embed=embed)
-			print(file['url'])
+                if ctx.channel.is_nsfw():
+			tosearch=search
+			keywords, searchwords = GoogleSearch.key_words_search_words(GoogleSearch, user_message=tosearch)
+			print(f'got keywords: {keywords}\n from {search}')
+			cs = aiohttp.ClientSession()
+			print('got client session')
+			headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36"}
+			r = await cs.get(f'https://e621.net/posts.json?tags={keywords}+order:score+type:jpg+type:png&limit=50', headers=headers)
+			print('got e6 link')
+			print(r.status)
+			if r.status == 200:
+				data = await r.json(content_type=None)
+				print(len(data['posts']))
+				if len(data['posts']) == 0:
+					return await ctx.send('No results!')
+				post = random.choice(data['posts'])
+				file = post['file']
+				embed = discord.Embed(title="e621: "+search, color = ctx.author.color)
+				embed.set_image(url=file['url'])
+				await ctx.send(embed=embed)
+				print(file['url'])
+			else:
+				await ctx.send(f'Problem status: {r.status}')
+			await cs.close()
 		else:
-			await ctx.send(f'Problem status: {r.status}')
-		await cs.close()
-
+			await ctx.send('Command must be used in nsfw channel!!!')
 
 def setup(bot):
 	bot.add_cog(FurryCommands(bot))
