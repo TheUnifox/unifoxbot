@@ -8,7 +8,7 @@ import discord
 from discord.ext import commands
 import json
 
-class FurryCommands(commands.Cog, name="Furry Commands", description="Commands for furries ;)"):
+class Furry(commands.Cog, name="Furry Commands", description="Commands for furries ;)"):
 	@commands.command(name='glomp', help='glomp on someone ;)')
 	async def glomp(self, ctx, *, user: discord.Member):
 		try:
@@ -83,5 +83,5 @@ class NSFWFurryCommands(commands.Cog, name="NSFW Furry Commands", description="T
 			await ctx.send('Command must be used in nsfw channel!!!')
 
 def setup(bot):
-	bot.add_cog(FurryCommands(bot))
+	bot.add_cog(Furry(bot))
 	bot.add_cog(NSFWFurryCommands(bot))

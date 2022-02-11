@@ -21,13 +21,20 @@ from discord.ext import commands, tasks
 from discord.ext.commands import has_permissions, CheckFailure, check
 
 class NewHelpName(commands.MinimalHelpCommand):
-	async def send_pages(self):
+	async def send_pages(self, *, category=None):
 		destination = self.get_destination()
-		embed = discord.Embed(title='Help!', description='These are the categories', colour=discord.Colour.red())
-		print(Main.bot.cogs)
-		for cog in Main.bot.cogs:
-			print(cog)
-			embed.add_field(name=cog, value=Main.bot.cogs[cog].description)
+		if category == None:
+			embed = discord.Embed(title='Help!', description='These are the categories.', colour=discord.Colour.red())
+			print(Main.bot.cogs)
+			for cog in Main.bot.cogs:
+				print(cog)
+				embed.add_field(name=cog, value=Main.bot.cogs[cog].description)
+			embed.set_footer(text='type (prefix)help (category) for info on a category \neg. h!help furry')
+		else:
+			embed = discord.Embed(title='Help!', description=f'Commands in {category}', colour=discord.Colour.red())
+			for command in Main.bot.cogs[category]:
+				print(command)
+				embed.add_field(name=command, value=Main.bot.command.description)
 		await destination.send(embed=embed)
 
 #---main class---#
@@ -50,12 +57,12 @@ class Main():
 
 	#this is used for loading all the functions later
 	extensions = [
-	    'cogs.cog_example',
-			'cogs.adminCommands',
-			'cogs.musicCommands',
-			'cogs.generalCommands',
-			'cogs.searchCommands',
-			'cogs.furryCommands'
+		'cogs.cog_example',
+		'cogs.admin',
+		'cogs.music',
+		'cogs.general',
+		'cogs.search',
+		'cogs.furry'
 	]
 
 	#---events---#
@@ -169,6 +176,23 @@ class Main():
 			if word in BotSettings.badwords:
 				time.sleep(0.5)
 				await message.delete() #if so, delete the message
+		if message.content.startswith(f'{BotSettings.prefix}help'):
+			destination = message.channel
+			category = message.content
+			if category == f'{BotSettings.prefix}help':
+				embed = discord.Embed(title='Help!', description='These are the categories.', colour=discord.Colour.red())
+				print(Main.bot.cogs)
+				for cog in Main.bot.cogs:
+					print(cog)
+					embed.add_field(name=cog, value=Main.bot.cogs[cog].description)
+				embed.set_footer(text='type (prefix)help (category) for info on a category \neg. h!help Furry Commands')
+			else:
+				embed = discord.Embed(title='Help!', description=f'Commands in {category}', colour=discord.Colour.red())
+				for command in Main.bot.cogs[category[5+len(BotSettings.prefix):]].get_commands():
+					print(command)
+					embed.add_field(name=command, value=command.help)
+			print(embed)
+			return await destination.send(embed=embed)
 		await Main.bot.process_commands(message)
 
 	#this is used to load all the command modules from before
