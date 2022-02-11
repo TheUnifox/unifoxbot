@@ -55,7 +55,7 @@ class FurryCommands(commands.Cog, name="Furry Commands", description="Commands f
 class NSFWFurryCommands(commands.Cog, name="NSFW Furry Commands", description="The fun commands for furries ;)"):
 	@commands.command(name='yiff', help='Searches e621.net based off a search term')
 	async def yiff(self, ctx, *, search='gay'):
-                if ctx.channel.is_nsfw():
+		if ctx.channel.is_nsfw():
 			tosearch=search
 			keywords, searchwords = GoogleSearch.key_words_search_words(GoogleSearch, user_message=tosearch)
 			print(f'got keywords: {keywords}\n from {search}')
