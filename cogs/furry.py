@@ -119,8 +119,11 @@ class NSFWFurryCommands(commands.Cog, name="NSFW Furry Commands", description="T
 				if len(data['posts']) == 0:
 					return await ctx.send('No results!')
 				post = data['posts'][0]
+				print(post)
 				file = post['file']
+				print(file)
 				embed = discord.Embed(title=f"e621: post "+str(postid), color = ctx.author.color)
+				print(embed)
 				embed.set_image(url=file['url'])
 				await ctx.send(embed=embed)
 				print(file['url'])
