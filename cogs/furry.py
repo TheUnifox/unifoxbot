@@ -95,7 +95,10 @@ class NSFWFurryCommands(commands.Cog, name="NSFW Furry Commands", description="T
 				post = random.choice(data['posts'])
 				file = post['file']
 				embed = discord.Embed(title=f"e621: {search}, id: {post['id']}", color = ctx.author.color)
-				embed.set_image(url=file['url'])
+				if file['url'] == None:
+					embed.set_image(url=post['sources'][len(post['sources'])-1])
+				else:
+					embed.set_image(url=file['url'])
 				await ctx.send(embed=embed)
 				print(file['url'])
 			else:
@@ -124,7 +127,10 @@ class NSFWFurryCommands(commands.Cog, name="NSFW Furry Commands", description="T
 				print(file)
 				embed = discord.Embed(title=f"e621: post {postid}", color = ctx.author.color)
 				print(embed)
-				embed.set_image(url=file['url'])
+				if file['url'] == None:
+					embed.set_image(url=post['sources'][len(post['sources'])-1])
+				else:
+					embed.set_image(url=file['url'])
 				await ctx.send(embed=embed)
 				print(file['url'])
 			else:
