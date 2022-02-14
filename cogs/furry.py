@@ -104,6 +104,32 @@ class NSFWFurryCommands(commands.Cog, name="NSFW Furry Commands", description="T
 		else:
 			await ctx.send('Command must be used in nsfw channel!!!')
 
+	@commands.command(name='post', help='tries to get the post with the given id')
+	async def post(self, ctx, id: int):
+		if ctx.channel.is_nsfw():
+			cs = aiohttp.ClientSession()
+			print('got client session')
+			headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36"}
+			r = await cs.get(f'https://e621.net/posts.json?tags=id:{id}', headers=headers)
+			print('got e6 link')
+			print(r.status)
+			if r.status == 200:
+				data = await r.json(content_type=None)
+				print(len(data['posts']))
+				if len(data['posts']) == 0:
+					return await ctx.send('No results!')
+				post = data['posts']
+				file = post['file']
+				embed = discord.Embed(title="e621: "+search, color = ctx.author.color)
+				embed.set_image(url=file['url'])
+				await ctx.send(embed=embed)
+				print(file['url'])
+			else:
+				await ctx.send(f'Problem status: {r.status}')
+			await cs.close()
+		else:
+			await ctx.send('Command must be used in nsfw channel!!!')
+
 #---setup function---
 #sets up the cogs ig idk
 def setup(bot):
