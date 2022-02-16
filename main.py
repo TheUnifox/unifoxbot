@@ -189,6 +189,7 @@ class Main():
 #get the bot token to log in with
 #use the command loading function to load commands
 #and finally start the bot!
+keep_alive()  # Starts a webserver to be pinged.
 token = os.environ.get("DISCORD_BOT_SECRET")
 Main.loadCogs()
 Main.bot.run(token)  # Starts the bot
