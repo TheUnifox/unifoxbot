@@ -90,7 +90,7 @@ class DevCommands(commands.Cog, name='Developer Commands', description='Strictly
 	@commands.command(name='restart', help='restarts the bot')
 	async def restart(self, ctx):
 		await ctx.send('restarting...')
-		await self.bot.logout()
+		await self.bot.close()
 		await self.bot.start()
 
 #the setup to add these commands to the bot
