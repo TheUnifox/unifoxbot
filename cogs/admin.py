@@ -28,20 +28,20 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 
 	#basic ping command to see if the bot is up
 	@commands.command(name='ping', help='used to check if bot is up ig')
-	@commands.has_any_role('admin', 'owner')
+	@commands.has_any_role('admin', 'owner', 'Staff')
 	async def ping(self, ctx):
 		await ctx.send("pong!")  #simple command so that when you type "!ping" the bot will respond with "pong!"
 	
 	#this command dont work the way I want, not sure if there even is a way to do what I wanted with this
 	@commands.command(name='errorlist', help='used to see a list of possible errors ig')
-	@commands.has_any_role('admin', 'owner')
+	@commands.has_any_role('admin', 'owner', 'Staff')
 	async def errorlist(self, ctx):
 		for x in discord.DiscordException:
 			await ctx.send(x)
 			
 	#a command to kick people out of a server
 	@commands.command(name='kick', help='used to kick a user with a reason')
-	@commands.has_any_role('admin', 'owner')
+	@commands.has_any_role('admin', 'owner', 'Staff')
 	async def kick(self, ctx, member: discord.Member, *, reason):
 		try:
 			await member.kick(reason=reason)
@@ -51,7 +51,7 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 	
 	#a command to BAN people from a server (i should add an unban ig)
 	@commands.command(name='ban', help='used to ban a user with a reason')
-	@commands.has_any_role('admin', 'owner')
+	@commands.has_any_role('admin', 'owner', 'Staff')
 	async def ban(self, ctx, member: discord.Member, *, reason):
 		try:
 			await member.ban(reason=reason)
@@ -62,41 +62,41 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 	#this is the spam command that starts the 2 functions from before
 	#if used requires a bot restart to stop
 	@commands.command(name='spam', help="Starts spamming, don't use. Bot will need to be shut down to stop")
-	@commands.has_any_role('admin', 'owner')
+	@commands.has_any_role('admin', 'owner', 'Staff')
 	async def spam(self, ctx):
 		await ctx.send('spamming...')
 		await AdminCommands.spam1(ctx)
 	
 	#a command to mute and unmute someone, this makes them unable to speak in a voice channel
 	@commands.command(name='mute', help='mutes a user')
-	@commands.has_any_role('admin', 'owner')
+	@commands.has_any_role('admin', 'owner', 'Staff')
 	async def mute(self, ctx, member: discord.Member):
 		await ctx.send(f"muted {member}")
 		await member.mute()
 	
 	@commands.command(name='unmute', help='unmutes a user')
-	@commands.has_any_role('admin', 'owner')
+	@commands.has_any_role('admin', 'owner', 'Staff')
 	async def unmute(self, ctx, member: discord.Member):
 		await ctx.send(f"unmuted {member}")
-		await member.unmute()	
+		await member.unmute()
 	
 	#used to get the server name and ID
 	@commands.command(name='guildID', help='gets current guild id')
-	@commands.has_any_role('admin', 'owner')
+	@commands.has_any_role('admin', 'owner', 'Staff')
 	async def guildID(self, ctx):
 		await ctx.send(f"guild: {ctx.guild}")
 		await ctx.send(f"has id: {ctx.guild.id}")
 	
 	#used to get the channel name and ID
 	@commands.command(name='channelID', help='gets current channel id')
-	@commands.has_any_role('admin', 'owner')
+	@commands.has_any_role('admin', 'owner', 'Staff')
 	async def channelID(self, ctx):
 		await ctx.send(f"channel: {ctx.channel}")
 		await ctx.send(f"has id: {ctx.channel.id}")
 
 	#used to announce something important to every server the bot is in, but only their announcement channels
 	@commands.command(name='announceAll', help='sends an @ everyone announcement to every server the bot is in.')
-	@commands.has_any_role('admin', 'owner')
+	@commands.has_any_role('admin', 'owner', 'Staff')
 	async def announceAll(self, ctx, *, message):
 		for guild in Main.bot.guilds:
 			for channel in guild.text_channels:
@@ -105,7 +105,7 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 
 	#used to send a message to every channel of every server the bot is in lol
 	@commands.command(name='allChan', help='Sends a message to EVERY channel, in EVERY server, the bot is in. ~~why did i make this~~')
-	@commands.has_any_role('admin', 'owner')
+	@commands.has_any_role('admin', 'owner', 'Staff')
 	async def allChan(self, ctx, *, message):
 		for guild in Main.bot.guilds:
 			for channel in guild.text_channels:
@@ -113,7 +113,7 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 
 	#to change the bot prefix, or what the bot looks for to see if it should do something
 	@commands.command(name='prefix', help='changes the bot prefix, *will need to be set upon bot reset*')
-	@commands.has_any_role('admin', 'owner')
+	@commands.has_any_role('admin', 'owner', 'Staff')
 	async def prefix(self, ctx, newpre):
 		Main.bot.command_prefix = newpre
 		BotSettings.setPrefix(newpre)
@@ -122,7 +122,7 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 
 	#used to clear a number of messages from a channel, good for clearing spam
 	@commands.command(name='purge', help='deletes the given number of messages from the channel. cannot purge more than 100')
-	@commands.has_any_role('admin', 'owner')
+	@commands.has_any_role('admin', 'owner', 'Staff')
 	async def purge(self, ctx, messagenum: int):
 		if messagenum > 100:
 			return await ctx.send('cannot purge more than 100')
@@ -132,7 +132,7 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 
 	#used to ignore a channel, the bot wont check messages, or for commands
 	@commands.command(name='ignore', help='add a channel to ignore bad words in (send this in the channel)')
-	@commands.has_any_role('admin', 'owner')
+	@commands.has_any_role('admin', 'owner', 'Staff')
 	async def ignore(self, ctx):
 		BotSettings.ignoreChannels.append(str(ctx.channel))
 		await ctx.send(f'now ignoring this channel')
@@ -140,7 +140,7 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 
 	#used to clear a channel from being ignored. must be sent in a non ignored channel (I may change this later idk)
 	@commands.command(name='delIgnore', help='remove a channel from the ignore list, use listIgnored to identify the index of the channel. (starts at 0, not 1)', breif='remove a channel from the ignore list')
-	@commands.has_any_role('admin', 'owner')
+	@commands.has_any_role('admin', 'owner', 'Staff')
 	async def delIgnore(self, ctx, *, channelindex: int):
 		await ctx.send(f'now monitoring {BotSettings.ignoreChannels[channelindex]}')
 		BotSettings.ignoreChannels.pop(int(channelindex))
@@ -148,13 +148,13 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 
 	#gets the list of channels the bot is ignoring
 	@commands.command(name='listIgnored', help='lists the ignored channels')
-	@commands.has_any_role('admin', 'owner')
+	@commands.has_any_role('admin', 'owner', 'Staff')
 	async def listIgnore(self, ctx):
 		await ctx.send(BotSettings.ignoreChannels)
 
 	#set the number of warns required for specific actions to happen
 	@commands.command(name='setwarns', help='sets the warn limit')
-	@commands.has_any_role('admin', 'owner')
+	@commands.has_any_role('admin', 'owner', 'Staff')
 	async def setwarns(self, ctx, limit: int):
 		BotSettings.setWarnlimit(limit)
 		await ctx.send(f'warn limit set to {limit}')
@@ -165,7 +165,7 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 	#if they then exceed by 1, they are kicked. they can rejoin, but warns are only manually cleared
 	#if they exceed by 2, by being kicked and rejoining, they are banned
 	@commands.command(name='warn', help='warns given user, and add 1 to the warn counts. WARNING: will kick a user if warn count for them goes above a limit!', brief='warns a user, use help warn to see more')
-	@commands.has_any_role('admin', 'owner')
+	@commands.has_any_role('admin', 'owner', 'Staff')
 	async def warn(self, ctx, *, member: discord.Member):
 		await ctx.send(f'@{member}... you have been warned')
 		try:
@@ -182,7 +182,7 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 
 	#used to clear a users warnings
 	@commands.command(name='delWarn', help='removes given users warnings')
-	@commands.has_any_role('admin', 'owner')
+	@commands.has_any_role('admin', 'owner', 'Staff')
 	async def delWarn(self, ctx, *, member: discord.Member):
 		await ctx.send(f'@{member}, warnings removed!')
 		try:
@@ -193,7 +193,7 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 
 	#used to add a word to the blacklist of words that shall not be spoken
 	@commands.command(name='addbadword', aliases = ['abw'], help='used to add a word to a blacklist of words')
-	@commands.has_any_role('admin', 'owner')
+	@commands.has_any_role('admin', 'owner', 'Staff')
 	async def addbadword(self, ctx, *, word):
 		for x in word.split():
 			BotSettings.badwords.append(x)
@@ -201,7 +201,7 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 
 	#used to manually save the bot settings, shouldnt need to be used, as commands auto save
 	@commands.command(name='savesett', help='used to save the bots current settings in case of crash or shutdown', breif='saves bot settings')
-	@commands.has_any_role('admin', 'owner')
+	@commands.has_any_role('admin', 'owner', 'Staff')
 	async def savesett(self, ctx):
 		await ctx.send('saving settings')
 		settfile = open('bot.sett', 'wb')
@@ -211,7 +211,7 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 
 	#used to completely wipe a channel of all messages, if purge would take too long
 	@commands.command(name='totalwipe', help='completely wipes a channel')
-	@commands.has_any_role('admin', 'owner')
+	@commands.has_any_role('admin', 'owner', 'Staff')
 	async def totalwipe(self, ctx):
 		await ctx.send('wiping channel...')
 		time.sleep(5)
@@ -222,7 +222,7 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 	#used to completely clear a server, only for if every channel possible has been spammed too much to clear with purge
 	#also requires me to come here to replit to allow a clear
 	@commands.command(name='SERVERWIPE', help='WARNING: this command competely clears the server! ONLY use if a server reset is needed, such as a large raid.', breif='WARNING: this command competely clears the server!')
-	@commands.has_any_role('admin', 'owner')
+	@commands.has_any_role('admin', 'owner', 'Staff')
 	async def serverwipe(self, ctx):
 		await ctx.send('are you sure? go to replit console to confirm')
 		confirm = input('CONFIRM SERVER WIPE? (Y/N)')
@@ -240,7 +240,7 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 
 	#add a channel to the channels pinged upon an announcement command
 	@commands.command(name='addannounce', help='used to add a channel to the announcement list')
-	@commands.has_any_role('admin', 'owner')
+	@commands.has_any_role('admin', 'owner', 'Staff')
 	async def addannounce(self, ctx, *, channel):
 		BotSettings.announceChannels.append(channel)
 		BotSettings.quietSave()
@@ -248,7 +248,7 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 
 	#remove a channel from that list
 	@commands.command(name='delannounce', help='used to remove a channel from the announcement list, use listannounce to identify the index of the channel. (starts at 0, not 1)', breif='remove a channel from the announcement list')
-	@commands.has_any_role('admin', 'owner')
+	@commands.has_any_role('admin', 'owner', 'Staff')
 	async def delannounce(self, ctx, *, chanindex: int):
 		await ctx.send(f'no longer announcing in {BotSettings.announceChannels[chanindex]}')
 		BotSettings.announceChannels.pop(chanindex)
@@ -256,13 +256,13 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 
 	#and show the channels in the list
 	@commands.command(name='listannounce', help='lists the announcement channels')
-	@commands.has_any_role('admin', 'owner')
+	@commands.has_any_role('admin', 'owner', 'Staff')
 	async def listannounce(self, ctx):
 		await ctx.send(BotSettings.announceChannels)
 
 	#add channel to no be cleared on server clear
 	@commands.command(name='addClearIgnore', help='adds a channel to be ignored upon serverwipe', aliases=['aci'])
-	@commands.has_any_role('admin', 'owner')
+	@commands.has_any_role('admin', 'owner', 'Staff')
 	async def addClearIgnore(self, ctx, *, channel):
 		BotSettings.clearIgnore.append(channel)
 		BotSettings.quietSave()
@@ -270,7 +270,7 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 
 	#remove server from list that won't be cleared
 	@commands.command(name='delClearIgnore', help='removes a channel from being ignored upon serverwipe', aliases=['dci'])
-	@commands.has_any_role('admin', 'owner')
+	@commands.has_any_role('admin', 'owner', 'Staff')
 	async def delClearIgnore(self, ctx, *, channelid: int):
 		await ctx.send(f"{BotSettings.clearIgnore[channelid]} will now be cleared")
 		BotSettings.clearIgnore.pop(channelid)
@@ -278,7 +278,7 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 
 #and list the channels that won't be cleared
 	@commands.command(name='listClearIgnore', help='lists the clear ignored channels', aliases=['lci'])
-	@commands.has_any_role('admin', 'owner')
+	@commands.has_any_role('admin', 'owner', 'Staff')
 	async def listClearIgnore(self, ctx):
 		await ctx.send(BotSettings.clearIgnore)
 
