@@ -180,7 +180,7 @@ class Main():
 						if commno > 25:
 							embed2.add_field(name=command, value=command.help)
 						else:
-							embed1.add_field(name=command, value=command.help)
+							embed.add_field(name=command, value=command.help)
 				else:
 					embed = discord.Embed(title='Help!', description=f'Commands in {category}', colour=discord.Colour.red())
 					for command in Main.bot.cogs[category[5+len(BotSettings.prefix):]].get_commands():
@@ -191,7 +191,7 @@ class Main():
 				await destination.send(embed=embed)
 				return await destination.send(embed=embed2)
 			else:
-				await destination.send(embed=embed)
+				return await destination.send(embed=embed)
 		await Main.bot.process_commands(message)
 
 	#this is used to load all the command modules from before
