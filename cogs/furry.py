@@ -20,7 +20,7 @@ class Furry(commands.Cog, name="Furry Commands", description="Commands for furri
 	@commands.command(name='glomp', help='glomp on someone ;)')
 	async def glomp(self, ctx, *, user: discord.Member):
 		try:
-			await ctx.send(f'{ctx.author.mention} jumps at {user.mention}, knocking the to the ground in a hug UwU')
+			await ctx.send(f'{ctx.author.mention} jumps at {user.mention}, knocking them to the ground in a hug, whispering "I love you" UwU')
 		except:
 			await ctx.send('Sorry, idk that person.')
 
