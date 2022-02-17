@@ -55,7 +55,7 @@ class Main():
 		print(Main.bot.user)  # Prints the bot's username and identifier
 		for guild in Main.bot.guilds: #goes through all the servers the bot is in
 			for channel in guild.text_channels: #goes through all the channels in each server
-				if str(channel) == "general" or str(channel) == "test" or str(channel) == "testagain": #checks if the channel is one of these
+				if str(channel) == "bot-setup-for-the-mods" or str(channel) == "bot-setup" or str(channel) == "testagain": #checks if the channel is one of these
 					await channel.send("I'M AWAKE") #and sends a message saying the bot is up
 			print(f'active in {guild.name}\n member count: {guild.member_count}') #and finally says its active in a server, and how many people are in it
 
@@ -161,6 +161,7 @@ class Main():
 		if message.content.startswith(f'{BotSettings.prefix}help'):
 			destination = message.channel
 			category = message.content
+			commno = 0
 			if category == f'{BotSettings.prefix}help':
 				embed = discord.Embed(title='Help!', description='These are the categories.', colour=discord.Colour.red())
 				print(Main.bot.cogs)
@@ -169,12 +170,28 @@ class Main():
 					embed.add_field(name=cog, value=Main.bot.cogs[cog].description)
 				embed.set_footer(text='type (prefix)help (category) for info on a category \neg. h!help Furry Commands')
 			else:
-				embed = discord.Embed(title='Help!', description=f'Commands in {category}', colour=discord.Colour.red())
-				for command in Main.bot.cogs[category[5+len(BotSettings.prefix):]].get_commands():
-					print(command)
-					embed.add_field(name=command, value=command.help)
+                                if len(Main.bot.cogs[category[5+len(BotSettings.prefix):]].get_commands()) > 25:
+					commno = 0
+					embed = discord.Embed(title='Help!', description=f'Commands in {category}', colour=discord.Colour.red())
+					embed2 = discord.Embed(title='Help! (cont.)', description=f'Commands in {category}', colour=discord.Colour.red())
+					for command in Main.bot.cogs[category[5+len(BotSettings.prefix):]].get_commands():
+						print(command)
+						commno += 1
+						if commno > 25:
+							embed2.add_field(name=command, value=command.help)
+						else:
+							embed1.add_field(name=command, value=command.help)
+				else:
+					embed = discord.Embed(title='Help!', description=f'Commands in {category}', colour=discord.Colour.red())
+					for command in Main.bot.cogs[category[5+len(BotSettings.prefix):]].get_commands():
+						print(command)
+						embed.add_field(name=command, value=command.help)
 			print(embed)
-			return await destination.send(embed=embed)
+			if commno > 25:
+				await destination.send(embed=embed)
+				return await destination.send(embed=embed2)
+			else:
+				await destination.send(embed=embed)
 		await Main.bot.process_commands(message)
 
 	#this is used to load all the command modules from before
