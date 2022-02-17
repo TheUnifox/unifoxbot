@@ -53,18 +53,18 @@ class Furry(commands.Cog, name="Furry Commands", description="Commands for furri
 	#I still need to add a timeout to end the pile if no one does anything with it
 	@commands.command(name='furpile', help='Join or make a furpile :)')
 	async def furpile(self, ctx, *, user: discord.Member=None):
-		if user == None and FurryCommands.furpilestarted == False:
+		if user == None and Furry.furpilestarted == False:
 			await ctx.send('you have to start it with someone')
 		elif user == None:
 			await ctx.send(f'{ctx.author.mention} has joined the furpile')
-			FurryCommands.furpilecount += 1
-		elif not user == None and FurryCommands.furpilestarted == False:
+			Furry.furpilecount += 1
+		elif not user == None and Furry.furpilestarted == False:
 			await ctx.send(f'{ctx.author.mention} started a furpile with {user.mention}')
-			FurryCommands.furpilestarted = True
-			FurryCommands.furpilecount = 2
-		elif not user == None and FurryCommands.furpilestarted == True:
+			Furry.furpilestarted = True
+			Furry.furpilecount = 2
+		elif not user == None and Furry.furpilestarted == True:
 			await ctx.send(f'{ctx.author.mention} joined, bringing {user.mention} with them')
-			FurryCommands.furpilecount += 2
+			Furry.furpilecount += 2
 
 #---NSFW furry commands class ;)---
 #houses all the fun furry commands
