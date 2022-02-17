@@ -36,7 +36,7 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 	@commands.command(name='errorlist', help='used to see a list of possible errors ig')
 	@commands.has_any_role('admin', 'owner')
 	async def errorlist(self, ctx):
-		for x in discord.Exception:
+		for x in discord.DiscordException:
 			await ctx.send(x)
 			
 	#a command to kick people out of a server
