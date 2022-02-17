@@ -82,6 +82,17 @@ class DevCommands(commands.Cog, name='Developer Commands', description='Strictly
 		base_string += "\n```"
 		await ctx.send(base_string)
 
+	@commands.command(name='off', help='turns the bot off, bot needs to be restarted to turn on again')
+	async def off(self, ctx):
+		await ctx.send('BYE!')
+		await self.bot.logout()
+
+	@commands.command(name='restart', help='restarts the bot')
+	async def restart(self, ctx):
+		await ctx.send('restarting...')
+		await self.bot.logout()
+		await self.bot.start()
+
 #the setup to add these commands to the bot
 def setup(bot):
 	print('loading cog example')
