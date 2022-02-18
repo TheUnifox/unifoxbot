@@ -100,7 +100,39 @@ class BotSettings():
 	def setTimeoutChan(newindex):
 		BotSettings.timeoutChanindex = newindex
 		BotSettings.botSettingsToSave['timeoutChanindex'] = newindex
-	
+
+	def addtoignore(new):
+		BotSettings.ignoreChannels.append(new)
+		BotSettings.botSettingsToSave['ignoreChannels'].append(new)
+
+	def delfromignore(index):
+		BotSettings.ignoreChannels.pop(index)
+		BotSettings.botSettingsToSave['ignoreChannels'].pop(index)
+
+	def addtobadwords(new):
+		BotSettings.badwords.append(new)
+		BotSettings.botSettingsToSave['badwords'].append(new)
+
+	def delfrombadwords(index):
+		BotSettings.badwords.pop(index)
+		BotSettings.botSettingsToSave['badwords'].pop(index)
+
+	def addtoannounce(new):
+		BotSettings.announceChannels.append(new)
+		BotSettings.botSettingsToSave['announceChannels'].append(new)
+
+	def delfromannounce(index):
+		BotSettings.announceChannels.pop(index)
+		BotSettings.botSettingsToSave['announceChannels'].pop(index)
+
+	def addtoclearignore(new):
+		BotSettings.clearIgnore.append(new)
+		BotSettings.botSettingsToSave['clearIgnore'].append(new)
+
+	def delfromclearignore(index):
+		BotSettings.clearIgnore.pop(index)
+		BotSettings.botSettingsToSave['clearIgnore'].pop(index)
+
 	#used to save the vaiables to file
 	def quietSave():
 		settfile = open('bot.sett', 'wb')

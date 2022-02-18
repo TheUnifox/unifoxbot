@@ -32,13 +32,6 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 	async def ping(self, ctx):
 		await ctx.send("pong!")  #simple command so that when you type "!ping" the bot will respond with "pong!"
 	
-	#this command dont work the way I want, not sure if there even is a way to do what I wanted with this
-	@commands.command(name='errorlist', help='used to see a list of possible errors ig')
-	@commands.has_any_role('admin', 'owner', 'Staff')
-	async def errorlist(self, ctx):
-		for x in discord.DiscordException:
-			await ctx.send(x)
-			
 	#a command to kick people out of a server
 	@commands.command(name='kick', help='used to kick a user with a reason')
 	@commands.has_any_role('admin', 'owner', 'Staff')
@@ -134,7 +127,7 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 	@commands.command(name='ignore', help='add a channel to ignore bad words in (send this in the channel)')
 	@commands.has_any_role('admin', 'owner', 'Staff')
 	async def ignore(self, ctx):
-		BotSettings.ignoreChannels.append(str(ctx.channel))
+		BotSettings.addtoignore(str(ctx.channel))
 		await ctx.send(f'now ignoring this channel')
 		BotSettings.quietSave()
 
@@ -143,7 +136,7 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 	@commands.has_any_role('admin', 'owner', 'Staff')
 	async def delIgnore(self, ctx, *, channelindex: int):
 		await ctx.send(f'now monitoring {BotSettings.ignoreChannels[channelindex]}')
-		BotSettings.ignoreChannels.pop(int(channelindex))
+		BotSettings.delfromignore(int(channelindex))
 		BotSettings.BotSetings.quietSave()
 
 	#gets the list of channels the bot is ignoring
@@ -170,6 +163,7 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 		await ctx.send(f'@{member}... you have been warned')
 		try:
 			BotSettings.warnlist[member] += 1
+			BotSettings.botSettingsToSave['warnlist'][member] += 1
 			if BotSettings.warnlist[member] == BotSettings.warnlimit:
 				ctx.send(f'@{member}! you are at the warn limit, once more and you are kicked!')
 			if BotSettings.warnlist[member] == BotSettings.warnlimit + 1:
@@ -187,6 +181,7 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 		await ctx.send(f'@{member}, warnings removed!')
 		try:
 			BotSettings.warnlist[member] -= BotSettings.warnlist[member]
+			BotSettings.botSettingsToSave['warnlist'][member] -= BotSettings.botSettingsToSave['warnlist'][member]
 		except:
 			await ctx.send(f'{member} has no warnings on record')
 		BotSettings.quietSave()
@@ -196,7 +191,7 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 	@commands.has_any_role('admin', 'owner', 'Staff')
 	async def addbadword(self, ctx, *, word):
 		for x in word.split():
-			BotSettings.badwords.append(x)
+			BotSettings.addtobadwords(x)
 		BotSettings.quietSave()
 
 	#used to manually save the bot settings, shouldnt need to be used, as commands auto save
@@ -242,7 +237,7 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 	@commands.command(name='addannounce', help='used to add a channel to the announcement list')
 	@commands.has_any_role('admin', 'owner', 'Staff')
 	async def addannounce(self, ctx, *, channel):
-		BotSettings.announceChannels.append(channel)
+		BotSettings.addtoannounce(channel)
 		BotSettings.quietSave()
 		await ctx.send(f'now announcing in {channel} as well')
 
@@ -251,7 +246,7 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 	@commands.has_any_role('admin', 'owner', 'Staff')
 	async def delannounce(self, ctx, *, chanindex: int):
 		await ctx.send(f'no longer announcing in {BotSettings.announceChannels[chanindex]}')
-		BotSettings.announceChannels.pop(chanindex)
+		BotSettings.delfromannounce(chanindex)
 		BotSettings.quietSave()
 
 	#and show the channels in the list
@@ -264,7 +259,7 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 	@commands.command(name='addClearIgnore', help='adds a channel to be ignored upon serverwipe', aliases=['aci'])
 	@commands.has_any_role('admin', 'owner', 'Staff')
 	async def addClearIgnore(self, ctx, *, channel):
-		BotSettings.clearIgnore.append(channel)
+		BotSettings.addtoclearignore(channel)
 		BotSettings.quietSave()
 		await ctx.send(f"{channel} won't be cleared")
 
@@ -273,7 +268,7 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 	@commands.has_any_role('admin', 'owner', 'Staff')
 	async def delClearIgnore(self, ctx, *, channelid: int):
 		await ctx.send(f"{BotSettings.clearIgnore[channelid]} will now be cleared")
-		BotSettings.clearIgnore.pop(channelid)
+		BotSettings.delfromclearignore(channelid)
 		BotSettings.quietSave()
 
 #and list the channels that won't be cleared
