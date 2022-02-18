@@ -63,6 +63,11 @@ class Main():
 	#it creates a chat with person to welcome them
 	@bot.event
 	async def on_member_join(member):
+                for server in Main.bot.guilds:
+                        if server == member.guild:
+                                for channel in server:
+                                        if channel.name == 'welcomes':
+                                                await channel.send(f'Welcome to {server.name}! Hope you have fun here!')
 		await member.create_dm()
 		await member.dm_channel.send(f"Why hello there {member.name}! Welcome!")
 
@@ -150,6 +155,8 @@ class Main():
 	#now check if its a help command and deal with it here
 	@bot.event
 	async def on_message(message):
+                if message.channel.type == Discord.ChannelType.private:
+			await message.channel.send('hi')
 		if message.channel.name.lower() in BotSettings.ignoreChannels:
 			return
 		if message.author == Main.bot.user:
@@ -168,7 +175,7 @@ class Main():
 				for cog in Main.bot.cogs:
 					print(cog)
 					embed.add_field(name=cog, value=Main.bot.cogs[cog].description)
-				embed.set_footer(text='type (prefix)help (category) for info on a category \neg. h!help Furry Commands')
+				embed.set_footer(text='type (prefix)help (category) for info on a category \neg. h!help Furry Commands (capitalization is important for now)')
 			else:
 				if len(Main.bot.cogs[category[5+len(BotSettings.prefix):]].get_commands()) > 25:
 					commno = 0
