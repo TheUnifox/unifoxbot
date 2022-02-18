@@ -63,11 +63,11 @@ class Main():
 	#it creates a chat with person to welcome them
 	@bot.event
 	async def on_member_join(member):
-                for server in Main.bot.guilds:
-                        if server == member.guild:
-                                for channel in server:
-                                        if channel.name == 'welcomes':
-                                                await channel.send(f'Welcome to {server.name}! Hope you have fun here!')
+		for server in Main.bot.guilds:
+			if server == member.guild:
+				for channel in server:
+					if channel.name == 'welcomes':
+						await channel.send(f'Welcome to {server.name}! Hope you have fun here!')
 		await member.create_dm()
 		await member.dm_channel.send(f"Why hello there {member.name}! Welcome!")
 
