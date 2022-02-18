@@ -20,7 +20,10 @@ class Furry(commands.Cog, name="Furry Commands", description="Commands for furri
 	@commands.command(name='glomp', help='glomp on someone ;)')
 	async def glomp(self, ctx, *, user: discord.Member):
 		try:
-			await ctx.send(f'{ctx.author.mention} jumps at {user.mention}, knocking them to the ground in a hug, whispering "I love you" UwU')
+			if ctx.author == user:
+				await ctx.send("You can't glomp yourself")
+			else:
+				await ctx.send(f'{ctx.author.mention} jumps at {user.mention}, knocking them to the ground in a hug, whispering "I love you" UwU')
 		except:
 			await ctx.send('Sorry, idk that person.')
 
@@ -28,7 +31,10 @@ class Furry(commands.Cog, name="Furry Commands", description="Commands for furri
 	@commands.command(name='hug', help='hug someone')
 	async def hug(self, ctx, *, user: discord.Member):
 		try:
-			await ctx.send(f'{ctx.author.mention} hugs {user.mention}.')
+			if ctx.author == user:
+				await ctx.send("You can't hug yourself")
+			else:
+				await ctx.send(f'{ctx.author.mention} hugs {user.mention}.')
 		except:
 			await ctx.send('Sorry, idk them.')
 
@@ -36,7 +42,10 @@ class Furry(commands.Cog, name="Furry Commands", description="Commands for furri
 	@commands.command(name='pet', help='pet someone')
 	async def pet(self, ctx, *, user: discord.Member):
 		try:
-			await ctx.send(f'{ctx.author.mention} gently pats {user.mention} on the head.')
+			if ctx.author == user:
+				await ctx.send("You can't pet yourself")
+			else:
+				await ctx.send(f'{ctx.author.mention} gently pats {user.mention} on the head.')
 		except:
 			await ctx.send('Couldn\'t find the person to pet...')
 
@@ -48,6 +57,7 @@ class Furry(commands.Cog, name="Furry Commands", description="Commands for furri
 	#furpile tracking vars
 	furpilestarted = False
 	furpilecount = 0
+	fursinpile = list()
 
 	#start, join, or bring someone to a furpile
 	#I still need to add a timeout to end the pile if no one does anything with it
@@ -55,16 +65,27 @@ class Furry(commands.Cog, name="Furry Commands", description="Commands for furri
 	async def furpile(self, ctx, *, user: discord.Member=None):
 		if user == None and Furry.furpilestarted == False:
 			await ctx.send('you have to start it with someone')
+		elif Furry.furpilestarted == True and ctx.author in Furry.fursinpile:
+			await ctx.send('you are already in the pile!')
+		elif Furry.furpilestarted == True and user in Furry.fursinpile and not ctx.author in Furry.fursinpile:
+			await ctx.send(f'{user.mention} is already in the pile, but {ctx.author.mention} joins the pile')
+			Furry.furpilecount += 1
+			Furry.fursinpile.append(ctx.author)
 		elif user == None:
 			await ctx.send(f'{ctx.author.mention} has joined the furpile')
 			Furry.furpilecount += 1
+			Furry.fursinpile.append(ctx.author)
 		elif not user == None and Furry.furpilestarted == False:
 			await ctx.send(f'{ctx.author.mention} started a furpile with {user.mention}')
 			Furry.furpilestarted = True
 			Furry.furpilecount = 2
+			Furry.fursinpile.append(ctx.author)
+			Furry.fursinpile.append(user)
 		elif not user == None and Furry.furpilestarted == True:
 			await ctx.send(f'{ctx.author.mention} joined, bringing {user.mention} with them')
 			Furry.furpilecount += 2
+			Furry.fursinpile.append(ctx.author)
+			Furry.fursinpile.append(user)
 
 #---NSFW furry commands class ;)---
 #houses all the fun furry commands
