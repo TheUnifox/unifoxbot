@@ -155,8 +155,8 @@ class Main():
 	#now check if its a help command and deal with it here
 	@bot.event
 	async def on_message(message):
-		if message.channel.type == discord.ChannelType.private:
-			await message.channel.send('hi')
+		if message.channel.type == discord.ChannelType.private and not message.author == Main.bot.user:
+			return await message.channel.send('hi')
 		if message.channel.name.lower() in BotSettings.ignoreChannels:
 			return
 		if message.author == Main.bot.user:
