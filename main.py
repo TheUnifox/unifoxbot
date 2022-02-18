@@ -148,6 +148,9 @@ class Main():
 		print('pong2')
 		await ctx.send("pong2")
 
+	async def dmcheck(message):
+		return await ctx.send('hi')
+
 	#this event is triggered every time a message is sent
 	#it checks to see if the channel should be ignored
 	#then if the message was sent by this bot
@@ -156,7 +159,7 @@ class Main():
 	@bot.event
 	async def on_message(message):
 		if message.channel.type == discord.ChannelType.private and not message.author == Main.bot.user:
-			return await message.channel.send('hi')
+			Main.dmcheck(message)
 		if message.channel.name.lower() in BotSettings.ignoreChannels:
 			return
 		if message.author == Main.bot.user:
