@@ -65,8 +65,10 @@ class Furry(commands.Cog, name="Furry Commands", description="Commands for furri
 	async def furpile(self, ctx, *, user: discord.Member=None):
 		if user == None and Furry.furpilestarted == False:
 			await ctx.send('you have to start it with someone')
-		elif Furry.furpilestarted == True and ctx.author in Furry.fursinpile:
+		elif Furry.furpilestarted == True and ctx.author in Furry.fursinpile and not Main.bot.author_id == ctx.author.id:
 			await ctx.send('you are already in the pile!')
+		elif Furry.furpilestarted == True and ctx.author in Furry.fursinpile and Main.bot.author_id == ctx.author.id:
+			await ctx.send(f'You somehow get {user.mention} on the pile')
 		elif Furry.furpilestarted == True and user in Furry.fursinpile and not ctx.author in Furry.fursinpile:
 			Furry.furpilecount += 1
 			await ctx.send(f'{user.mention} is already in the pile, but {ctx.author.mention} joins the pile \nThere are {Furry.furpilecount} furs in the pile.')
