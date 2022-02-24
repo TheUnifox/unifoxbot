@@ -159,7 +159,7 @@ class Main():
 	@bot.event
 	async def on_message(message):
 		if message.channel.type == discord.ChannelType.private and not message.author == Main.bot.user:
-			Main.dmcheck(message)
+			return await Main.dmcheck(message)
 		if message.channel.name.lower() in BotSettings.ignoreChannels:
 			return
 		if message.author == Main.bot.user:

@@ -68,21 +68,21 @@ class Furry(commands.Cog, name="Furry Commands", description="Commands for furri
 		elif Furry.furpilestarted == True and ctx.author in Furry.fursinpile:
 			await ctx.send('you are already in the pile!')
 		elif Furry.furpilestarted == True and user in Furry.fursinpile and not ctx.author in Furry.fursinpile:
-			await ctx.send(f'{user.mention} is already in the pile, but {ctx.author.mention} joins the pile')
+			await ctx.send(f'{user.mention} is already in the pile, but {ctx.author.mention} joins the pile \nThere are {Furry.furpilecount} furs in the pile.')
 			Furry.furpilecount += 1
 			Furry.fursinpile.append(ctx.author)
 		elif user == None:
-			await ctx.send(f'{ctx.author.mention} has joined the furpile')
+			await ctx.send(f'{ctx.author.mention} has joined the furpile \nThere are {Furry.furpilecount} furs in the pile.')
 			Furry.furpilecount += 1
 			Furry.fursinpile.append(ctx.author)
 		elif not user == None and Furry.furpilestarted == False:
-			await ctx.send(f'{ctx.author.mention} started a furpile with {user.mention}')
+			await ctx.send(f'{ctx.author.mention} started a furpile with {user.mention} \nThere are {Furry.furpilecount} furs in the pile.')
 			Furry.furpilestarted = True
 			Furry.furpilecount = 2
 			Furry.fursinpile.append(ctx.author)
 			Furry.fursinpile.append(user)
 		elif not user == None and Furry.furpilestarted == True:
-			await ctx.send(f'{ctx.author.mention} joined, bringing {user.mention} with them')
+			await ctx.send(f'{ctx.author.mention} joined, bringing {user.mention} with them \nThere are {Furry.furpilecount} furs in the pile.')
 			Furry.furpilecount += 2
 			Furry.fursinpile.append(ctx.author)
 			Furry.fursinpile.append(user)
