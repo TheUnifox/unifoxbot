@@ -93,7 +93,7 @@ class Furry(commands.Cog, name="Furry Commands", description="Commands for furri
 
 	@commands.command(name='leavepile', help='leave the furpile :(')
 	async def leavepile(self, ctx):
-		
+		await ctx.send('not yet')
 
 #---NSFW furry commands class ;)---
 #houses all the fun furry commands
