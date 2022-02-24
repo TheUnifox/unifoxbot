@@ -68,9 +68,10 @@ class Furry(commands.Cog, name="Furry Commands", description="Commands for furri
 		elif Furry.furpilestarted == True and ctx.author in Furry.fursinpile and not Main.bot.author_id == ctx.author.id:
 			await ctx.send('you are already in the pile!')
 		elif Furry.furpilestarted == True and ctx.author in Furry.fursinpile and Main.bot.author_id == ctx.author.id and not user in Furry.fursinpile:
+			Furry.furpilecount += 1
 			await ctx.send(f'You somehow get {user.mention} on the pile \nThere are {Furry.furpilecount} furs in the pile.')
 		elif Furry.furpilestarted == True and ctx.author in Furry.fursinpile and Main.bot.author_id == ctx.author.id and user in Furry.fursinpile:
-			await ctx.send(f'{user.mention} is on the pile \nThere are {Furry.furpilecount} furs in the pile.')
+			await ctx.send(f'{user.mention} is on the pile')
 		elif Furry.furpilestarted == True and user in Furry.fursinpile and not ctx.author in Furry.fursinpile:
 			Furry.furpilecount += 1
 			await ctx.send(f'{user.mention} is already in the pile, but {ctx.author.mention} joins the pile \nThere are {Furry.furpilecount} furs in the pile.')
