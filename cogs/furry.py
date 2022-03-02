@@ -95,6 +95,8 @@ class Furry(commands.Cog, name="Furry Commands", description="Commands for furri
 	@commands.command(name='leavepile', help='leave the furpile :(')
 	async def leavepile(self, ctx):
 		await ctx.send('not yet')
+		if len(Furry.furpilecount) > 1:
+			await ctx.send(f'')
 
 #---NSFW furry commands class ;)---
 #houses all the fun furry commands
@@ -114,7 +116,7 @@ class NSFWFurryCommands(commands.Cog, name="NSFW Furry Commands", description="T
 			cs = aiohttp.ClientSession()
 			print('got client session')
 			headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36"}
-			r = await cs.get(f'https://e621.net/posts.json?tags={keywords}+-watersports+-scat+-vore+-gore+-loli+-shota+order:score+type:jpg+type:png&limit=50', headers=headers)
+			r = await cs.get(f'https://e621.net/posts.json?tags={keywords}+-watersports+-scat+-vore+-gore+-loli+-shota+order:score+type:jpg+type:png+type:gif&limit=50', headers=headers)
 			print('got e6 link')
 			print(r.status)
 			if r.status == 200:
@@ -162,6 +164,38 @@ class NSFWFurryCommands(commands.Cog, name="NSFW Furry Commands", description="T
 				else:
 					embed.set_image(url=file['url'])
 				await ctx.send(embed=embed)
+				print(file['url'])
+			else:
+				await ctx.send(f'Problem status: {r.status}')
+			await cs.close()
+		else:
+			await ctx.send('Command must be used in nsfw channel!!!')
+
+	@commands.command(name='e6anim', help='searches e621 for videos based off a search term')
+	async def e6anim(self, ctx, *, search='gay'):
+		if ctx.channel.is_nsfw():
+			tosearch=search
+			keywords, searchwords = GoogleSearch.key_words_search_words(GoogleSearch, user_message=tosearch)
+			print(f'got keywords: {keywords}\n from {search}')
+			cs = aiohttp.ClientSession()
+			print('got client session')
+			headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36"}
+			r = await cs.get(f'https://e621.net/posts.json?tags={keywords}+-watersports+-scat+-vore+-gore+-loli+-shota+order:score+type:webm+type:mp4&limit=50', headers=headers)
+			print('got e6 link')
+			print(r.status)
+			if r.status == 200:
+				data = await r.json(content_type=None)
+				print(len(data['posts']))
+				if len(data['posts']) == 0:
+					return await ctx.send('No results!')
+				post = random.choice(data['posts'])
+				file = post['file']
+				if file['url'] == None:
+					player, filename = await Main.YTDLSource.from_url(post['sources'][len(post['sources'])-1], loop=Main.bot.loop)
+					await ctx.send(file=filename, content="e621: {search}, id: {post['id']}")
+				else:
+					player, filename = await Main.YTDLSource.from_url(file['url'], loop=Main.bot.loop)
+					await ctx.send(file=filename, content="e621: {search}, id: {post['id']}")
 				print(file['url'])
 			else:
 				await ctx.send(f'Problem status: {r.status}')
