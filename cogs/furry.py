@@ -190,13 +190,9 @@ class NSFWFurryCommands(commands.Cog, name="NSFW Furry Commands", description="T
 					return await ctx.send('No results!')
 				post = random.choice(data['posts'])
 				file = post['file']
-				if file['url'] == None:
-					player, filename = await Main.YTDLSource.from_url(post['sources'][len(post['sources'])-1], loop=Main.bot.loop)
-					await ctx.send(file=filename, content="e621: {search}, id: {post['id']}")
-				else:
-					player, filename = await Main.YTDLSource.from_url(file['url'], loop=Main.bot.loop)
-					await ctx.send(file=filename, content="e621: {search}, id: {post['id']}")
-				print(file['url'])
+				player, filename = await Main.YTDLSource.from_url(post['sources'][len(post['sources'])-1], loop=Main.bot.loop)
+				await ctx.send(file=filename, content="e621: {search}, id: {post['id']}")
+				print(post['sources'][len(post['sources'])-1])
 			else:
 				await ctx.send(f'Problem status: {r.status}')
 			await cs.close()

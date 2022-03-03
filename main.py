@@ -104,7 +104,7 @@ class Main():
 	    'restrictfilenames': True,
 	    'noplaylist': True,
 	    'nocheckcertificate': True,
-	    'ignoreerrors': False,
+	    'ignoreerrors': True,
 	    'logtostderr': True,
 	    'quiet': False,
 	    'no_warnings': False,
