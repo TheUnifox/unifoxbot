@@ -191,7 +191,6 @@ class NSFWFurryCommands(commands.Cog, name="NSFW Furry Commands", description="T
 				if len(data['posts']) == 0:
 					return await ctx.send('No results!')
 				post = data['posts'][0]
-				await ctx.send(post)
 				file = post['file']
 				await ctx.send(file)
 				player, filename = await Main.YTDLSource.from_url(post['sources'][len(post['sources'])-1], loop=Main.bot.loop)
