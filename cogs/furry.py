@@ -183,19 +183,16 @@ class NSFWFurryCommands(commands.Cog, name="NSFW Furry Commands", description="T
 			r = await cs.get(f'https://e621.net/posts.json?tags={keywords}+-watersports+-scat+-vore+-gore+-loli+-shota+order:score+type:webm&limit=50', headers=headers)
 			print('got e6 link')
 			print(r.status)
-			await ctx.send(r.status)
 			if r.status == 200:
 				data = await r.json(content_type=None)
-				await ctx.send(len(data['posts']))
 				print(len(data['posts']))
 				if len(data['posts']) == 0:
 					return await ctx.send('No results!')
-				post = data['posts'][0]
-				file = post['file']
-				await ctx.send(file)
-				player, filename = await Main.YTDLSource.from_url(post['sources'][len(post['sources'])-1], loop=Main.bot.loop)
+				post = random.choice(data['posts'])
+				file = post['sample']['alternatives']['original']['urls']
+				player, filename = await Main.YTDLSource.from_url(file[1], loop=Main.bot.loop)
 				await ctx.send(file=filename, content="e621: {search}, id: {post['id']}")
-				print(post['sources'][len(post['sources'])-1])
+				print(post['original'][len(post['sources'])-1])
 			else:
 				await ctx.send(f'Problem status: {r.status}')
 			await cs.close()
