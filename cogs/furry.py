@@ -190,7 +190,7 @@ class NSFWFurryCommands(commands.Cog, name="NSFW Furry Commands", description="T
 				print(len(data['posts']))
 				if len(data['posts']) == 0:
 					return await ctx.send('No results!')
-				await ctx.send(data['posts'])
+				await ctx.send(data['posts'][0])
 				post = random.choice(data['posts'])
 				await ctx.send(post)
 				file = post['file']
