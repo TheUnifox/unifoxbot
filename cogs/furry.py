@@ -94,7 +94,7 @@ class Furry(commands.Cog, name="Furry Commands", description="Commands for furri
 
 	@commands.command(name='leavepile', help='leave the furpile :(')
 	async def leavepile(self, ctx):
-		if not ctx.author in Furry.fursinpile
+		if not ctx.author in Furry.fursinpile:
 			return await ctx.send('You are nt in the pile')
 		if len(Furry.furpilecount) > 1:
 			if Furry.fursinpile[len(Furry.fursinpile)-1] == ctx.author:
