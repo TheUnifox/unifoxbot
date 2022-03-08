@@ -161,7 +161,7 @@ class Furry(commands.Cog, name="Furry Commands", description="Commands for furri
 			Furry.fursinconga.pop(0)
 			Furry.congastarted = False
 		Furry.congacount -= 1
-		await ctx.send(f'There are {Furry.congacount} furs in the conga.'  + (Main.bot.get_emoji(950891145339220048)*Furry.congacount))
+		await ctx.send(f'There are {Furry.congacount} furs in the conga.'  + (f'{Main.bot.get_emoji(950891145339220048)}'*Furry.congacount))
 
 #---NSFW furry commands class ;)---
 #houses all the fun furry commands
