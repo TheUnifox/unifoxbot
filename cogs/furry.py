@@ -190,6 +190,7 @@ class NSFWFurryCommands(commands.Cog, name="NSFW Furry Commands", description="T
 					return await ctx.send('No results!')
 				post = random.choice(data['posts'])
 				file = post['sample']['alternates']['original']['urls']
+				await ctx.send(file)
 				player, filename = await Main.YTDLSource.from_url(file[1], loop=Main.bot.loop)
 				await ctx.send(file=filename, content="e621: {search}, id: {post['id']}")
 				print(post['original'][len(post['sources'])-1])
