@@ -190,9 +190,9 @@ class NSFWFurryCommands(commands.Cog, name="NSFW Furry Commands", description="T
 					return await ctx.send('No results!')
 				post = random.choice(data['posts'])
 				file = post['sample']['alternates']['original']['urls'][1]
-				await ctx.send(file)
-				player, filename = await Main.YTDLSource.from_url(file, loop=Main.bot.loop)
-				await ctx.send(file=filename, content="e621: {search}, id: {post['id']}")
+				embed = discord.Embed(title=f"e621: post {postid}", color = ctx.author.color)
+				embed.set_image(url=file)
+				await ctx.send(embed=embed, content="e621: {search}, id: {post['id']}")
 				print(post['original'][len(post['sources'])-1])
 			else:
 				await ctx.send(f'Problem status: {r.status}')
