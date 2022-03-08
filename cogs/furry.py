@@ -94,9 +94,21 @@ class Furry(commands.Cog, name="Furry Commands", description="Commands for furri
 
 	@commands.command(name='leavepile', help='leave the furpile :(')
 	async def leavepile(self, ctx):
-		await ctx.send('not yet')
+		if not ctx.author in Furry.fursinpile
+			return await ctx.send('You are nt in the pile')
 		if len(Furry.furpilecount) > 1:
-			await ctx.send(f'')
+			if Furry.fursinpile[len(Furry.fursinpile)-1] == ctx.author:
+				await ctx.send('You hop off the pile')
+				Furry.fursinpile.pop(len(Furry.fursinpile)-1)
+			else:
+				await ctx.send('You manage to wiggle out of the pile')
+				Furry.fursinpile.pop(Furry.fursinpile.index(ctx.author))
+		else:
+			await ctx.send('You are the last person, You get up and leave')
+			Furry.fursinpile.pop(0)
+			Furry.furpilestarted = False
+		Furry.furpilecount -= 1
+		await ctx.send(f'There are {Furry.furpilecount} furs in the pile.')
 
 #---NSFW furry commands class ;)---
 #houses all the fun furry commands
