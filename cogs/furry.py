@@ -151,7 +151,7 @@ class Furry(commands.Cog, name="Furry Commands", description="Commands for furri
 			return await ctx.send('You are not in the conga')
 		if Furry.congacount > 1:
 			if Furry.fursinconga[len(Furry.fursinconga)-1] == ctx.author:
-				await ctx.send('You leave the conga')
+				await ctx.send('You leave the end of the conga')
 				Furry.fursinconga.pop(len(Furry.fursinconga)-1)
 			else:
 				await ctx.send('You leave the conga, the person behind you fills the gap.')
