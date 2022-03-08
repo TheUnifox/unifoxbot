@@ -181,7 +181,7 @@ class NSFWFurryCommands(commands.Cog, name="NSFW Furry Commands", description="T
 			cs = aiohttp.ClientSession()
 			print('got client session')
 			headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36"}
-			r = await cs.get(f'https://e621.net/posts.json?tags={keywords}+-watersports+-scat+-vore+-gore+-loli+-shota+order:score+type:jpg+type:png+type:gif&limit=50', headers=headers)
+			r = await cs.get(f'https://e621.net/posts.json?tags={keywords}+-watersports+-scat+-vore+-gore+-loli+-shota+-urine+-peeing+order:score+type:jpg+type:png+type:gif&limit=50', headers=headers)
 			print('got e6 link')
 			print(r.status)
 			if r.status == 200:
@@ -245,7 +245,7 @@ class NSFWFurryCommands(commands.Cog, name="NSFW Furry Commands", description="T
 			cs = aiohttp.ClientSession()
 			print('got client session')
 			headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36"}
-			r = await cs.get(f'https://e621.net/posts.json?tags={keywords}+-watersports+-scat+-vore+-gore+-loli+-shota+order:score+type:webm&limit=50', headers=headers)
+			r = await cs.get(f'https://e621.net/posts.json?tags={keywords}+-watersports+-scat+-vore+-gore+-loli+-shota+-urine+-peeing+order:score+type:webm&limit=50', headers=headers)
 			print('got e6 link')
 			print(r.status)
 			if r.status == 200:
@@ -273,7 +273,7 @@ class NSFWFurryCommands(commands.Cog, name="NSFW Furry Commands", description="T
 			cs = aiohttp.ClientSession()
 			print('got client session')
 			headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36"}
-			r = await cs.get(f'https://e621.net/posts.json?tags={keywords}+-watersports+-scat+-vore+-gore+-loli+-shota+order:random+type:jpg+type:png+type:gif&limit=50', headers=headers)
+			r = await cs.get(f'https://e621.net/posts.json?tags={keywords}+-watersports+-scat+-vore+-gore+-loli+-shota+-urine+-peeing+order:random+type:jpg+type:png+type:gif&limit=50', headers=headers)
 			print('got e6 link')
 			print(r.status)
 			if r.status == 200:
@@ -305,7 +305,7 @@ class NSFWFurryCommands(commands.Cog, name="NSFW Furry Commands", description="T
 			cs = aiohttp.ClientSession()
 			print('got client session')
 			headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36"}
-			r = await cs.get(f'https://e621.net/posts.json?tags={keywords}+-watersports+-scat+-vore+-gore+-loli+-shota+order:random+type:webm&limit=50', headers=headers)
+			r = await cs.get(f'https://e621.net/posts.json?tags={keywords}+-watersports+-scat+-vore+-gore+-loli+-shota+-urine+-peeing+order:random+type:webm&limit=50', headers=headers)
 			print('got e6 link')
 			print(r.status)
 			if r.status == 200:
