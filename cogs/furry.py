@@ -95,7 +95,7 @@ class Furry(commands.Cog, name="Furry Commands", description="Commands for furri
 	@commands.command(name='leavepile', help='leave the furpile :(')
 	async def leavepile(self, ctx):
 		if not ctx.author in Furry.fursinpile:
-			return await ctx.send('You are nt in the pile')
+			return await ctx.send('You are not in the pile')
 		if Furry.furpilecount > 1:
 			if Furry.fursinpile[len(Furry.fursinpile)-1] == ctx.author:
 				await ctx.send('You hop off the pile')
@@ -144,6 +144,24 @@ class Furry(commands.Cog, name="Furry Commands", description="Commands for furri
 			await ctx.send(f'{ctx.author.mention} joined, bringing {user.mention} with them \nThere are {Furry.congacount} furs in the conga.' + (':furdancing:'*Furry.congacount))
 			Furry.fursinconga.append(ctx.author)
 			Furry.fursinconga.append(user)
+
+	@commands.command(name='leaveconga', help='leave the conga line')
+	async def leaveconga(self, ctx):
+		if not ctx.author in Furry.fursinconga:
+			return await ctx.send('You are not in the conga')
+		if Furry.congacount > 1:
+			if Furry.fursinconga[len(Furry.fursinconga)-1] == ctx.author:
+				await ctx.send('You leave the conga')
+				Furry.fursinconga.pop(len(Furry.fursinconga)-1)
+			else:
+				await ctx.send('You leave the conga, the person behind you fills the gap.')
+				Furry.fursinconga.pop(Furry.fursinconga.index(ctx.author))
+		else:
+			await ctx.send('You are the last person, You get up and leave')
+			Furry.fursinconga.pop(0)
+			Furry.congastarted = False
+		Furry.congacount -= 1
+		await ctx.send(f'There are {Furry.congacount} furs in the conga.'  + (':furdancing:'*Furry.congacount))
 
 #---NSFW furry commands class ;)---
 #houses all the fun furry commands
