@@ -122,26 +122,26 @@ class Furry(commands.Cog, name="Furry Commands", description="Commands for furri
 			await ctx.send('you are already in the conga!')
 		elif Furry.congastarted == True and ctx.author in Furry.fursinconga and Main.bot.author_id == ctx.author.id and not user in Furry.fursinconga:
 			Furry.congacount += 1
-			await ctx.send(f'You leave and bring {user.mention} to the conga \nThere are {Furry.congacount} furs in the conga.' + (':furdancing:'*Furry.congacount))
+			await ctx.send(f'You leave and bring {user.mention} to the conga \nThere are {Furry.congacount} furs in the conga.' + (f'{Main.bot.get_emoji(950891145339220048)}'*Furry.congacount))
 		elif Furry.congastarted == True and ctx.author in Furry.fursinconga and Main.bot.author_id == ctx.author.id and user in Furry.fursinconga:
 			await ctx.send(f'{user.mention} is in the conga')
 		elif Furry.congastarted == True and user in Furry.fursinconga and not ctx.author in Furry.fursinconga:
 			Furry.congacount += 1
-			await ctx.send(f'{user.mention} is already in the conga, but {ctx.author.mention} joins the conga \nThere are {Furry.congacount} furs in the conga.' + (':furdancing:'*Furry.congacount))
+			await ctx.send(f'{user.mention} is already in the conga, but {ctx.author.mention} joins the conga \nThere are {Furry.congacount} furs in the conga.' + (f'{Main.bot.get_emoji(950891145339220048)}'*Furry.congacount))
 			Furry.fursinconga.append(ctx.author)
 		elif user == None:
 			Furry.congacount += 1
-			await ctx.send(f'{ctx.author.mention} has joined the conga \nThere are {Furry.congacount} furs in the conga.' + (':furdancing:'*Furry.congacount))
+			await ctx.send(f'{ctx.author.mention} has joined the conga \nThere are {Furry.congacount} furs in the conga.' + (f'{Main.bot.get_emoji(950891145339220048)}'*Furry.congacount))
 			Furry.fursinconga.append(ctx.author)
 		elif not user == None and Furry.congastarted == False:
 			Furry.congacount = 2
-			await ctx.send(f'{ctx.author.mention} started a conga with {user.mention} \nThere are {Furry.congacount} furs in the conga.' + (':furdancing:'*Furry.congacount))
+			await ctx.send(f'{ctx.author.mention} started a conga with {user.mention} \nThere are {Furry.congacount} furs in the conga.' + (f'{Main.bot.get_emoji(950891145339220048)}'*Furry.congacount))
 			Furry.congastarted = True
 			Furry.fursinconga.append(ctx.author)
 			Furry.fursinconga.append(user)
 		elif not user == None and Furry.congastarted == True:
 			Furry.congacount += 2
-			await ctx.send(f'{ctx.author.mention} joined, bringing {user.mention} with them \nThere are {Furry.congacount} furs in the conga.' + (':furdancing:'*Furry.congacount))
+			await ctx.send(f'{ctx.author.mention} joined, bringing {user.mention} with them \nThere are {Furry.congacount} furs in the conga.' + (f'{Main.bot.get_emoji(950891145339220048)}'*Furry.congacount))
 			Furry.fursinconga.append(ctx.author)
 			Furry.fursinconga.append(user)
 
@@ -161,7 +161,7 @@ class Furry(commands.Cog, name="Furry Commands", description="Commands for furri
 			Furry.fursinconga.pop(0)
 			Furry.congastarted = False
 		Furry.congacount -= 1
-		await ctx.send(f'There are {Furry.congacount} furs in the conga.'  + (f'{Main.bot.get_emoji(950891145339220048)}'*Furry.congacount))
+		await ctx.send(f'There are {Furry.congacount} furs in the conga.' + (f'{Main.bot.get_emoji(950891145339220048)}'*Furry.congacount))
 
 #---NSFW furry commands class ;)---
 #houses all the fun furry commands
