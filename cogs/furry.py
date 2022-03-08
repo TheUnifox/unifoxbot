@@ -194,7 +194,6 @@ class NSFWFurryCommands(commands.Cog, name="NSFW Furry Commands", description="T
 				embed = discord.Embed(title=f"e621: {search}, id: {post['id']}", color = ctx.author.color)
 				embed.set_image(url=file)
 				await ctx.send(embed=embed)
-				print(post['original'][len(post['sources'])-1])
 			else:
 				await ctx.send(f'Problem status: {r.status}')
 			await cs.close()
