@@ -190,9 +190,8 @@ class NSFWFurryCommands(commands.Cog, name="NSFW Furry Commands", description="T
 					return await ctx.send('No results!')
 				post = random.choice(data['posts'])
 				file = post['sample']['alternates']['original']['urls'][1]
-				await ctx.send(file)
 				embed = discord.Embed(title=f"e621: {search}, id: {post['id']}", color = ctx.author.color)
-				embed.set_image(url=file)
+				embed.add_field("", file)
 				await ctx.send(embed=embed)
 			else:
 				await ctx.send(f'Problem status: {r.status}')
