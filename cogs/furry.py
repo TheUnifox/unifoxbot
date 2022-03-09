@@ -39,7 +39,7 @@ class Furry(commands.Cog, name="Furry Commands", description="Commands for furri
 			await ctx.send('Sorry, idk them.')
 
 	#pet someone
-	@commands.command(name='pet', help='pet someone')
+	@commands.command(name='pet', aliases=['pat'], help='pet someone, also (prefix)pat')
 	async def pet(self, ctx, *, user: discord.Member):
 		try:
 			if ctx.author == user:

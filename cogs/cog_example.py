@@ -93,6 +93,21 @@ class DevCommands(commands.Cog, name='Developer Commands', description='Strictly
 		await self.bot.close()
 		await self.bot.start()
 
+	@commands.command(name='timeouttest', aliases=['tt'], help='testing command timeout, current = 5 seconds')
+	async def timeouttest(self, ctx):
+		def check(msg):
+			return msg.author == ctx.author and msg.channel == ctx.channel
+		isdone = False
+		usermessage = None
+		while not isdone
+			await ctx.send(usermessage)
+			usermessage = (await Main.bot.wait_for(timeout = 5, 'message', check=check)).content
+
+	@timeouttest.error
+	async def on_error(self, ctx, error):
+		if isinstance(error, commands.CommandInvokeError):
+			await ctx.send('timeout!')
+
 #the setup to add these commands to the bot
 def setup(bot):
 	print('loading cog example')

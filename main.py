@@ -150,8 +150,16 @@ class Main():
 		await ctx.send("pong!")  #simple command so that when you type "!ping" the bot will respond with "pong!"
 
 	async def dmcheck(message):
-		await message.channel.send('hi')
 		await Main.bot.process_commands(message)
+
+	async def awaitresp():
+		Main.awaitingresp = True
+
+	async def returnresp(message):
+		Main.awaitingresp = False
+		return True
+
+	awaitingresp = False
 
 	#this event is triggered every time a message is sent
 	#it checks to see if the channel should be ignored
@@ -170,6 +178,8 @@ class Main():
 			if word in BotSettings.badwords:
 				time.sleep(0.5)
 				await message.delete() #if so, delete the message
+		if Main.awaitingresp:
+			return await returnresp(message)
 		if message.content.startswith(f'{BotSettings.prefix}help'):
 			destination = message.channel
 			category = message.content
