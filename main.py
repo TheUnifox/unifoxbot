@@ -152,15 +152,6 @@ class Main():
 	async def dmcheck(message):
 		await Main.bot.process_commands(message)
 
-	async def awaitresp():
-		Main.awaitingresp = True
-
-	async def returnresp(message):
-		Main.awaitingresp = False
-		return True
-
-	awaitingresp = False
-
 	#this event is triggered every time a message is sent
 	#it checks to see if the channel should be ignored
 	#then if the message was sent by this bot
@@ -178,8 +169,6 @@ class Main():
 			if word in BotSettings.badwords:
 				time.sleep(0.5)
 				await message.delete() #if so, delete the message
-		if Main.awaitingresp:
-			return await returnresp(message)
 		if message.content.startswith(f'{BotSettings.prefix}help'):
 			destination = message.channel
 			category = message.content

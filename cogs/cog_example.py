@@ -99,7 +99,7 @@ class DevCommands(commands.Cog, name='Developer Commands', description='Strictly
 			return msg.author == ctx.author and msg.channel == ctx.channel
 		isdone = False
 		usermessage = None
-		while not isdone
+		while not isdone:
 			await ctx.send(usermessage)
 			usermessage = (await Main.bot.wait_for(timeout = 5, 'message', check=check)).content
 
