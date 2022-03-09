@@ -5,6 +5,7 @@
 #import discord commands to make stuff work
 import discord
 from discord.ext import commands
+from main import Main
 
 #develpoer commands class
 #houses commands to be used by me for development
