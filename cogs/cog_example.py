@@ -101,7 +101,7 @@ class DevCommands(commands.Cog, name='Developer Commands', description='Strictly
 		usermessage = None
 		while not isdone:
 			await ctx.send(usermessage)
-			usermessage = (await Main.bot.wait_for(timeout = 5, 'message', check=check)).content
+			usermessage = (await Main.bot.wait_for('message', check=check, timeout = 5)).content
 
 	@timeouttest.error
 	async def on_error(self, ctx, error):
