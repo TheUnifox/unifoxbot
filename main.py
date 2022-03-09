@@ -151,6 +151,7 @@ class Main():
 	async def dmcheck(message):
 		await ctx.send('hi')
 		await Main.bot.process_commands(message)
+		return
 
 	#this event is triggered every time a message is sent
 	#it checks to see if the channel should be ignored
