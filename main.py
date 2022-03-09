@@ -143,10 +143,11 @@ class Main():
 
 	#---final main section---#
 	#this command should always work if the bot is up
-	@bot.command(name="ping2", help='generic ping command, should always work')
-	async def ping2(ctx):
-		print('pong2')
-		await ctx.send("pong2")
+	#basic ping command to see if the bot is up
+	@commands.command(name='ping', help='used to check if bot is up ig')
+	async def ping(self, ctx):
+		print("pong!")
+		await ctx.send("pong!")  #simple command so that when you type "!ping" the bot will respond with "pong!"
 
 	async def dmcheck(message):
 		await message.channel.send('hi')

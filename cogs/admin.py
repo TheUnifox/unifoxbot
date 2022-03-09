@@ -26,12 +26,6 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 		await ctx.send("spamming")
 		await AdminCommands.spam1(ctx)
 
-	#basic ping command to see if the bot is up
-	@commands.command(name='ping', help='used to check if bot is up ig')
-	@commands.has_any_role('admin', 'owner', 'Staff')
-	async def ping(self, ctx):
-		await ctx.send("pong!")  #simple command so that when you type "!ping" the bot will respond with "pong!"
-	
 	#a command to kick people out of a server
 	@commands.command(name='kick', help='used to kick a user with a reason')
 	@commands.has_any_role('admin', 'owner', 'Staff')

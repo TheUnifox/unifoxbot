@@ -174,7 +174,7 @@ class NSFWFurryCommands(commands.Cog, name="NSFW Furry Commands", description="T
 	#makes sure the post isn't a webm, because I couldn't get it working with webm video
 	@commands.command(name='yiff', help='Searches e621.net based off a search term')
 	async def yiff(self, ctx, *, search='gay'):
-		if ctx.channel.is_nsfw():
+		if ctx.channel.is_nsfw() or isinstance(ctx.channel, discord.channel.DMChannel):
 			tosearch=search
 			keywords, searchwords = GoogleSearch.key_words_search_words(GoogleSearch, user_message=tosearch)
 			print(f'got keywords: {keywords}\n from {search}')
@@ -206,7 +206,7 @@ class NSFWFurryCommands(commands.Cog, name="NSFW Furry Commands", description="T
 
 	@commands.command(name='post', help='tries to get the post with the given id')
 	async def post(self, ctx, postid: int):
-		if ctx.channel.is_nsfw():
+		if ctx.channel.is_nsfw() or isinstance(ctx.channel, discord.channel.DMChannel):
 			cs = aiohttp.ClientSession()
 			print('got client session')
 			headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36"}
@@ -238,7 +238,7 @@ class NSFWFurryCommands(commands.Cog, name="NSFW Furry Commands", description="T
 
 	@commands.command(name='e6anim', help='searches e621 for videos based off a search term')
 	async def e6anim(self, ctx, *, search='gay'):
-		if ctx.channel.is_nsfw():
+		if ctx.channel.is_nsfw() or isinstance(ctx.channel, discord.channel.DMChannel):
 			tosearch=search
 			keywords, searchwords = GoogleSearch.key_words_search_words(GoogleSearch, user_message=tosearch)
 			print(f'got keywords: {keywords}\n from {search}')
@@ -266,7 +266,7 @@ class NSFWFurryCommands(commands.Cog, name="NSFW Furry Commands", description="T
 
 	@commands.command(name='randyiff', help='Searches e621.net based off a search term, sorts randomly')
 	async def randyiff(self, ctx, *, search='gay'):
-		if ctx.channel.is_nsfw():
+		if ctx.channel.is_nsfw() or isinstance(ctx.channel, discord.channel.DMChannel):
 			tosearch=search
 			keywords, searchwords = GoogleSearch.key_words_search_words(GoogleSearch, user_message=tosearch)
 			print(f'got keywords: {keywords}\n from {search}')
@@ -298,7 +298,7 @@ class NSFWFurryCommands(commands.Cog, name="NSFW Furry Commands", description="T
 
 	@commands.command(name='rande6anim', help='searches e621 for videos based off a search term, sorts randomly')
 	async def rande6anim(self, ctx, *, search='gay'):
-		if ctx.channel.is_nsfw():
+		if ctx.channel.is_nsfw() or isinstance(ctx.channel, discord.channel.DMChannel):
 			tosearch=search
 			keywords, searchwords = GoogleSearch.key_words_search_words(GoogleSearch, user_message=tosearch)
 			print(f'got keywords: {keywords}\n from {search}')
@@ -326,7 +326,7 @@ class NSFWFurryCommands(commands.Cog, name="NSFW Furry Commands", description="T
 
 	@commands.command(name='uwu', help='uwu copypasta lol')
 	async def uwu(self, ctx):
-		if ctx.channel.is_nsfw():
+		if ctx.channel.is_nsfw() or isinstance(ctx.channel, discord.channel.DMChannel):
 			await ctx.send("Rawr x3 nuzzles how are you pounces on you you're so warm o3o notices you have a bulge o: someone's happy (; nuzzles your necky wecky~ murr~ hehehe rubbies your bulgy wolgy you're so big :oooo rubbies more on your bulgy wolgy it doesn't stop growing ·///· kisses you and lickies your necky daddy likies (; nuzzles wuzzles I hope daddy really likes $: wiggles butt and squirms I want to see your big daddy meat~ wiggles butt I have a little itch o3o wags tail can you please get my itch~ puts paws on your chest nyea~ its a seven inch itch rubs your chest can you help me pwease squirms pwetty pwease sad face I need to be punished runs paws down your chest and bites lip like I need to be punished really good~ paws on your bulge as I lick my lips I'm getting thirsty. I can go for some milk unbuttons your pants as my eyes glow you smell so musky :v licks shaft mmmm~ so musky drools all over your cock your daddy meat I like fondles Mr. Fuzzy Balls hehe puts snout on balls and inhales deeply oh god im so hard~ licks balls punish me daddy~ nyea~ squirms more and wiggles butt I love your musky goodness bites lip please punish me licks lips nyea~ suckles on your tip so good licks pre of your cock salty goodness~ eyes role back and goes balls deep mmmm~ moans and suckles")
 		else:
 			await ctx.send('Command must be used in nsfw channel!!!')
