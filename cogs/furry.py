@@ -168,9 +168,9 @@ class Furry(commands.Cog, name="Furry Commands", description="Commands for furri
 class NSFWFurryCommands(commands.Cog, name="NSFW Furry Commands", description="The fun commands for furries ;)"):
 
 	async def nsfwcheck(channel):
-		if isinstance(ctx.channel, discord.channel.DMChannel):
+		if isinstance(channel, discord.channel.DMChannel):
 			return True
-		elif ctx.channel.is_nsfw():
+		elif channel.is_nsfw():
 			return True
 		else:
 			return False
@@ -182,7 +182,7 @@ class NSFWFurryCommands(commands.Cog, name="NSFW Furry Commands", description="T
 	#makes sure the post isn't a webm, because I couldn't get it working with webm video
 	@commands.command(name='yiff', help='Searches e621.net based off a search term')
 	async def yiff(self, ctx, *, search='gay'):
-		if await Furry.nsfwcheck(ctx.channel):
+		if await NSFWFurryCommands.nsfwcheck(ctx.channel):
 			tosearch=search
 			keywords, searchwords = GoogleSearch.key_words_search_words(GoogleSearch, user_message=tosearch)
 			print(f'got keywords: {keywords}\n from {search}')
