@@ -149,7 +149,7 @@ class Main():
 		await ctx.send("pong2")
 
 	async def dmcheck(message):
-		await ctx.send('hi')
+		return await ctx.send('hi')
 		await Main.bot.process_commands(message)
 		return
 
