@@ -141,7 +141,7 @@ class Main():
 	#---final main section---#
 	#this command should always work if the bot is up
 	#basic ping command to see if the bot is up
-	@commands.command(name='ping', help='used to check if bot is up ig')
+	@bot.command(name='ping', help='used to check if bot is up ig')
 	async def ping(self, ctx):
 		print("pong!")
 		await ctx.send("pong!")  #simple command so that when you type "!ping" the bot will respond with "pong!"
