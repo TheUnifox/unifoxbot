@@ -54,7 +54,6 @@ class Main():
 		print("I'm in")
 		print(Main.bot.user)  # Prints the bot's username and identifier
 		for guild in Main.bot.guilds: #goes through all the servers the bot is in
-			for channel in guild.text_channels: #goes through all the channels in each server
 			print(f'active in {guild.name}\n member count: {guild.member_count}') #and finally says its active in a server, and how many people are in it
 
 	#this is when someone joins a server
