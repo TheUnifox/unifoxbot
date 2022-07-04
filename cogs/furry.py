@@ -341,7 +341,7 @@ class NSFWFurryCommands(commands.Cog, name="NSFW Furry Commands", description="T
 
 #---NSFW+ furry commands class ;)---
 #houses all the fun furry extras commands
-class NSFWFurryCommands+(commands.Cog, name="NSFW Furry Commands+", description="The fun extras commands for furries ;)"):
+class NSFWFurryCommandsplus(commands.Cog, name="NSFW Furry Commands+", description="The fun extras commands for furries ;)"):
 
 	async def nsfwcheck(channel):
 		if isinstance(channel, discord.channel.DMChannel):
