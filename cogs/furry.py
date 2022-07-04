@@ -481,3 +481,4 @@ class NSFWFurryCommandsplus(commands.Cog, name="NSFW Furry Commands+", descripti
 def setup(bot):
 	bot.add_cog(Furry(bot))
 	bot.add_cog(NSFWFurryCommands(bot))
+        bot.add_cog(NSFWFurryCommandsplus(bot))
