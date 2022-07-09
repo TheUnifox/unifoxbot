@@ -245,7 +245,7 @@ class NSFWFurryCommands(commands.Cog, name="NSFW Furry Commands", description="T
 			await ctx.send('Command must be used in nsfw channel!!!')
 			
 	@commands.command(name='animpost', help='tries to get the post with the given id. for animations bc post only works for images/gif')
-	async def post(self, ctx, postid: int):
+	async def animpost(self, ctx, postid: int):
 		if await NSFWFurryCommands.nsfwcheck(ctx.channel):
 			cs = aiohttp.ClientSession()
 			print('got client session')
