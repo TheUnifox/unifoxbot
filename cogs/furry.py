@@ -243,6 +243,32 @@ class NSFWFurryCommands(commands.Cog, name="NSFW Furry Commands", description="T
 			await cs.close()
 		else:
 			await ctx.send('Command must be used in nsfw channel!!!')
+			
+	@commands.command(name='animpost', help='tries to get the post with the given id. for animations bc post only works for images/gif')
+	async def post(self, ctx, postid: int):
+		if await NSFWFurryCommands.nsfwcheck(ctx.channel):
+			cs = aiohttp.ClientSession()
+			print('got client session')
+			headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36"}
+			r = await cs.get(f'https://e621.net/posts.json?tags=id:{postid}', headers=headers)
+			print('got e6 link')
+			print(r.status)
+			if r.status == 200:
+				data = await r.json(content_type=None)
+				print(len(data['posts']))
+				if len(data['posts']) == 0:
+					return await ctx.send('No results!')
+				post = data['posts'][0]
+				print(post)
+				file = post['sample']['alternates']['original']['urls'][1]
+				embed = discord.Embed(title=f"e621: {search}, id: {post['id']}", color = ctx.author.color)
+				await ctx.send(embed=embed)
+				await ctx.send(file)
+			else:
+				await ctx.send(f'Problem status: {r.status}')
+			await cs.close()
+		else:
+			await ctx.send('Command must be used in nsfw channel!!!')
 
 	@commands.command(name='e6anim', help='searches e621 for videos based off a search term')
 	async def e6anim(self, ctx, *, search='gay'):
