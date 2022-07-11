@@ -23,17 +23,17 @@ from discord.ext.commands import has_permissions, CheckFailure, check
 #---main class---#
 #this houses most of this files stuff
 class Main():
+	
+	intents = discord.Intents(messages=True, guilds=True)
+	intents.members = True
 
 	#this is to get the discord bot, and set some stuff for it
 	bot = commands.Bot(
-    command_prefix = BotSettings.prefix,  # Change to desired prefix
-    case_insensitive=True,  # Commands aren't case-sensitive
-		strip_after_prefix=True
+    		command_prefix = BotSettings.prefix,  # Change to desired prefix
+    		case_insensitive=True,  # Commands aren't case-sensitive
+		strip_after_prefix=True,
+		intents=intents
 	)
-	
-	intents = discord.Intents.default()
-	intents.members = True
-	intents.presences = True
 
 	bot.ses = aiohttp.ClientSession()#get a client session for sumn idk
 
