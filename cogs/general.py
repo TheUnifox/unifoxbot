@@ -18,7 +18,6 @@ class GeneralCommands(commands.Cog, name='General Commands', description='Comman
 	@commands.command(name='whereami', help='tells where the bot is')
 	async def whereami(self, ctx):
 		owner = str(ctx.guild.owner)
-		region = str(ctx.guild.region)
 		guildID = str(ctx.guild.id)
 		memberCount = str(ctx.guild.member_count)
 		icon = str(ctx.guild.icon_url)
@@ -31,7 +30,6 @@ class GeneralCommands(commands.Cog, name='General Commands', description='Comman
 		embed.set_thumbnail(url=icon)
 		embed.add_field(name="Owner", value=owner, inline=True)
 		embed.add_field(name="Server ID", value=guildID, inline=True)
-		embed.add_field(name="Region", value=region, inline=True)
 		embed.add_field(name="Member Count", value=memberCount, inline=True)
 
 		await ctx.send(embed=embed)
@@ -57,9 +55,14 @@ class GeneralCommands(commands.Cog, name='General Commands', description='Comman
 			await ctx.send('member has no warnings')
 
 	#show the details of the person who sent the command (also checks if i sent it)
-	@commands.command(name='whoami', help='tells who you are ig')
-	async def whoami(self, ctx):
-		user = ctx.author
+	@commands.command(name='whoami', help='tells who you are ig. may also be given another user')
+	async def whoami(self, ctx, *, member: discord.Member = None):
+		if member != None:
+			user = member
+		elif member == None:
+			user = ctx.author
+		embed = discord.Embed(title=user+" Member Info", color=user.color)
+		embed.set_thumbnail(url=user.display_avatar.url)
 		if int(user.id) == Main.bot.author_id:
 			await ctx.send("Why hello my creator!")
 		await ctx.send(user)
