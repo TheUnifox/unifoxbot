@@ -20,9 +20,6 @@ from discord.utils import get
 from discord.ext import commands, tasks
 from discord.ext.commands import has_permissions, CheckFailure, check
 
-intents = discord.Intents()
-intents.members = True
-
 #---main class---#
 #this houses most of this files stuff
 class Main():
@@ -33,6 +30,10 @@ class Main():
     case_insensitive=True,  # Commands aren't case-sensitive
 		strip_after_prefix=True
 	)
+	
+	intents = discord.Intents.default()
+	intents.members = True
+	intents.presences = True
 
 	bot.ses = aiohttp.ClientSession()#get a client session for sumn idk
 
