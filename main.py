@@ -68,7 +68,7 @@ class Main():
 			print(f"searching server {server.name}")
 			if server == member.guild:
 				print("server found")
-				for channel in server:
+				for channel in server.channels:
 					print(f"serching channel {channel.name}")
 					if channel.name == 'welcomes':
 						print("found channel")
