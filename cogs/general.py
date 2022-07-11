@@ -65,7 +65,7 @@ class GeneralCommands(commands.Cog, name='General Commands', description='Comman
 		embed.set_thumbnail(url=user.avatar)
 		if int(user.id) == Main.bot.author_id:
 			await ctx.send("Why hello my creator!")
-		await ctx.send(user)
+		await ctx.send(embed=embed)
 
 #the setup function
 def setup(bot):
