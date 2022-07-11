@@ -171,9 +171,9 @@ class Main():
 	async def on_message(message):
 		if message.channel.type == discord.ChannelType.private and not message.author == Main.bot.user:
 			return await Main.dmcheck(message)
-		if message.channel.name.lower() in BotSettings.ignoreChannels:
-			return
 		if message.author == Main.bot.user:
+			return
+		if message.channel.name.lower() in BotSettings.ignoreChannels:
 			return
 		for word in message.content.split():
 			if word in BotSettings.badwords:
