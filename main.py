@@ -20,6 +20,9 @@ from discord.utils import get
 from discord.ext import commands, tasks
 from discord.ext.commands import has_permissions, CheckFailure, check
 
+intents = discord.Intents()
+intents.members = True
+
 #---main class---#
 #this houses most of this files stuff
 class Main():
@@ -60,12 +63,6 @@ class Main():
 	#it creates a chat with person to welcome them
 	@bot.event
 	async def on_member_join(member):
-		print("creating dm")
-		await member.create_dm()
-		print("sending message")
-		await member.dm_channel.send(f"Why hello there {member.name}! Welcome!")
-		print("message sent")
-		print("member joined")
 		for server in Main.bot.guilds:
 			print(f"searching server {server.name}")
 			if server == member.guild:
@@ -76,6 +73,12 @@ class Main():
 						print("found channel")
 						await channel.send(f'Welcome to {server.name}! Hope you have fun here!')
 						print("message sent")
+		print("creating dm")
+		await member.create_dm()
+		print("sending message")
+		await member.dm_channel.send(f"Why hello there {member.name}! Welcome!")
+		print("message sent")
+		print("member joined")
 
 	#this is when something bad happens in a command
 	#it lets me know what went wrong, and possibly keeps the bot from crashing
