@@ -184,9 +184,16 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 	@commands.command(name='addbadword', aliases = ['abw'], help='used to add a word to a blacklist of words')
 	@commands.has_any_role('admin', 'owner', 'Staff')
 	async def addbadword(self, ctx, *, word):
+		print('going through words')
 		for x in word.split():
+			print(x)
+			print('adding to list')
 			BotSettings.addtobadwords(x)
+			print('addedto list')
+		print('saving')
 		BotSettings.quietSave()
+		print('saved')
+		print(BotSettings.badWords)
 
 	#used to manually save the bot settings, shouldnt need to be used, as commands auto save
 	@commands.command(name='savesett', help='used to save the bots current settings in case of crash or shutdown', breif='saves bot settings')
