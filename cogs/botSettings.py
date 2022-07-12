@@ -120,7 +120,8 @@ class BotSettings():
 
 	def addtobadwords(new):
 		BotSettings.badwords.append(new)
-		BotSettings.botSettingsToSave['badwords'].append(new)
+		BotSettings.botSettingsToSave['badwords'] = BotSettings.badwords
+		BotSettings.quietsave()
 
 	def delfrombadwords(index):
 		BotSettings.badwords.pop(index)
