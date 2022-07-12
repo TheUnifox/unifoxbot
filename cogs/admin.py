@@ -281,6 +281,10 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 	@commands.has_any_role('admin', 'owner', 'Staff')
 	async def listClearIgnore(self, ctx):
 		await ctx.send(BotSettings.clearIgnore)
+	
+	@commands.command(name='logbadwords', help='send the list of badwords to heroku logs', aliases=['lbw'])
+	async def logbadwords(self, ctx):
+		print(BotSettings.badwords)
 
 #a setup function required in all files that have commands, used by discord to load the commands into the bot
 def setup(bot):
