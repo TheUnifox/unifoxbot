@@ -119,9 +119,13 @@ class BotSettings():
 		BotSettings.botSettingsToSave['ignoreChannels'].pop(index)
 
 	def addtobadwords(new):
+		print(f'adding {new}')
 		BotSettings.badwords.append(new)
+		print('added new, setting save')
 		BotSettings.botSettingsToSave['badwords'] = BotSettings.badwords
+		print('save set, saving to file')
 		BotSettings.quietsave()
+		print('saved')
 
 	def delfrombadwords(index):
 		BotSettings.badwords.pop(index)
