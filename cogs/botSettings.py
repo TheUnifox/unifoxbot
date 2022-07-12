@@ -124,7 +124,7 @@ class BotSettings():
 		print('added new, setting save')
 		BotSettings.botSettingsToSave['badwords'] = BotSettings.badwords
 		print('save set, saving to file')
-		quietsave()
+		BotSettings.quietSave()
 		print('saved')
 
 	def delfrombadwords(index):
