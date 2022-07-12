@@ -193,7 +193,7 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 		print('saving')
 		BotSettings.quietSave()
 		print('saved')
-		print(BotSettings.badWords)
+		print(BotSettings.badwords)
 
 	#used to manually save the bot settings, shouldnt need to be used, as commands auto save
 	@commands.command(name='savesett', help='used to save the bots current settings in case of crash or shutdown', breif='saves bot settings')
