@@ -64,19 +64,24 @@ class Main():
 	#it creates a chat with person to welcome them
 	@bot.event
 	async def on_member_join(member):
+		chanfound = False
 		for server in Main.bot.guilds:
 			print(f"searching server {server.name}")
 			if server == member.guild:
 				print("server found")
 				for channel in server.channels:
-					print(f"serching channel {channel.name}")
-					if channel.name == 'welcomes':
-						print("found channel")
-						embed=discord.Embed(title="Welcome!", color=discord.Colour.random(seed=(str(member))))
-						embed.set_thumbnail(url=member.avatar_url)
-						embed.add_field(name=f"Welcome to {server.name}", value=f"You are the {(len(server.members)-15)} attendee here! Head to #rules to read and accept, and become a part of this convention! The next convention is Oct. 14-16! We hope you have fun here!")
-						await channel.send(embed=embed)
-						print("message sent")
+					if chanfound:
+						return
+					elif not chanfound:
+						print(f"serching channel {channel.name}")
+						if channel.name == 'welcomes':
+							chanfound = True
+							print("found channel")
+							embed=discord.Embed(title="Welcome!", color=discord.Colour.random(seed=(str(member))))
+							embed.set_thumbnail(url=member.avatar_url)
+							embed.add_field(name=f"Welcome to {server.name}", value=f"You are the {(len(server.members)-15)} attendee here! Head to #rules to read and accept, and become a part of this convention! The next convention is Oct. 14-16! We hope you have fun here!")
+							await channel.send(embed=embed)
+							print("message sent")
 		print("creating dm")
 		await member.create_dm()
 		print("sending message")
