@@ -187,9 +187,13 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 		print('going through words')
 		for x in word.split():
 			print(x)
-			print('adding to list')
-			BotSettings.addtobadwords(x)
-			print('addedto list')
+			if x in BotSettings.badwords:
+				print('word in list')
+				continue
+			else:
+				print('adding to list')
+				BotSettings.addtobadwords(x)
+				print('addedto list')
 		print('saving')
 		BotSettings.quietSave()
 		print('saved')
