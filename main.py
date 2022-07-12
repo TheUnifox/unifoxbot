@@ -80,6 +80,7 @@ class Main():
 							embed=discord.Embed(title="Welcome!", color=discord.Colour.random(seed=(str(member))))
 							embed.set_thumbnail(url=member.avatar_url)
 							embed.add_field(name=f"Welcome to {server.name}", value=f"You are the {(len(server.members)-15)} attendee here! Head to #rules to read and accept, and become a part of this convention! The next convention is Oct. 14-16! We hope you have fun here!")
+							await asyncio.sleep(0.2)
 							await channel.send(embed=embed)
 							print("message sent")
 		print("creating dm")
