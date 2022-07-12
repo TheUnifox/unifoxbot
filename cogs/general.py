@@ -62,7 +62,7 @@ class GeneralCommands(commands.Cog, name='General Commands', description='Comman
 		elif member == None:
 			user = ctx.author
 		embed = discord.Embed(title=f"{user} Member Info", color=user.color)
-		embed.set_thumbnail(url=user.avatar)
+		embed.set_thumbnail(url=user.avatar_url)
 		embed.add_field(name="User avatar: ", value=None, inline=True)
 		if int(user.id) == Main.bot.author_id:
 			await ctx.send("Why hello my creator!")
