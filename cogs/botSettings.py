@@ -22,6 +22,7 @@ class BotSettings():
 	prefix = 'h!'
 	try:
 		prefix = botSettings['prefix']
+		print(prefix)
 	except:
 		print('default prefix')
 	
@@ -29,6 +30,7 @@ class BotSettings():
 	warnlist = dict()
 	try:
 		warnlist = botSettings['warnlist']
+		print(warnlist)
 	except:
 		print('empty warnlist')
 	
@@ -36,6 +38,7 @@ class BotSettings():
 	setVolume = 0.5
 	try:
 		setVolume = float(botSettings['musicVol'])
+		print(setVolume)
 	except:
 		print('default vol set')
 	
@@ -43,6 +46,7 @@ class BotSettings():
 	ignoreChannels = ['spam', 'Spam']
 	try:
 		ignoreChannels = botSettings['ignoreChannels']
+		print(ignoreChannels)
 	except:
 		print('empty ignore list')
 	
@@ -50,6 +54,7 @@ class BotSettings():
 	badwords = [] #empty by default (may or may not be empty to show in class lol)
 	try:
 		badwords = botSettings['badwords']
+		print(badwords)
 	except:
 		print('no bad words')
 	
@@ -57,6 +62,7 @@ class BotSettings():
 	warnlimit = 5
 	try:
 		warnlimit = int(botSettings['warnlimit'])
+		print(warnlimit)
 	except:
 		print('default warnlimit')
 	
@@ -64,6 +70,7 @@ class BotSettings():
 	timeoutChanindex = 0
 	try:
 		timeoutChanindex = int(botSettings['timeoutChanindex'])
+		print(timeoutChanindex)
 	except:
 		print('default timeout channel index')
 	
@@ -71,12 +78,14 @@ class BotSettings():
 	announceChannels = ['announcements', 'Announcements', 'test']
 	try:
 		announceChannels = botSettings['announceChannels']
+		print(announceChannels)
 	except:
 		print('default announcement channels')
 
 	clearIgnore = list()
 	try:
 		clearIgnore = botSettings['clearIgnore']
+		print(clearIgnore)
 	except:
 		print('no clear ignores')
 
