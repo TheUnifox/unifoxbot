@@ -64,6 +64,9 @@ class Main():
 	#it creates a chat with person to welcome them
 	@bot.event
 	async def on_member_join(member):
+		if str(member).startswith('自動の共栄圏は'):
+			await member.kick(reason='bot :D')
+			return
 		chanfound = False
 		for server in Main.bot.guilds:
 			print(f"searching server {server.name}")
