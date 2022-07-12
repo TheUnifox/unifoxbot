@@ -75,7 +75,7 @@ class Main():
 						embed=discord.Embed(title="Welcome!", color=discord.Colour.yellow())
 						embed.set_thumbnail(url=member.avatar_url)
 						embed.add_field(name=f"Welcome to {server.name}", value=f"You are the {(len(server.members)-15)} attendee here! Head to #rules to read and accept, and become a part of this convention! The next convention is Oct. 14-16! We hope you have fun here!"
-						await channel.send(embed=embed)
+						await channel.send('hello')
 						print("message sent")
 		print("creating dm")
 		await member.create_dm()
