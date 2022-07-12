@@ -194,9 +194,6 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 				print('adding to list')
 				BotSettings.addtobadwords(x)
 				print('addedto list')
-		print('saving')
-		BotSettings.quietSave()
-		print('saved')
 		print(BotSettings.badwords)
 
 	#used to manually save the bot settings, shouldnt need to be used, as commands auto save
