@@ -14,6 +14,7 @@ class BotSettings():
 	
 	#try to open the settings file to load from
 	try:
+		data = {}
 		response = requests.get(url='https://api.heroku.com/apps/unifoxbot/config-vars', json=data, headers={'Accept':'application/vnd.heroku+json; version=3', 'Authorization': f'Bearer {os.environ["HEROKU_API_KEY"]}'})
 		botSettings = json.loads(response.content.decode('utf-8')) 
 	except Exception as e:
