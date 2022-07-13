@@ -3,6 +3,9 @@
 
 #import pickle to save and load bot settings
 import pickle
+import os
+import requests
+import json
 
 #---the bot settings---#
 #houses all the variables used throughout the bot
@@ -11,12 +14,11 @@ class BotSettings():
 	
 	#try to open the settings file to load from
 	try:
-		file = open('bot.sett', 'rb')
-		botSettings = pickle.load(file)      
-		file.close()
+		response = requests.get(url='https://api.heroku.com/apps/unifoxbot/config-vars', json=data, headers={'Accept':'application/vnd.heroku+json; version=3', 'Authorization': f'Bearer {os.environ["HEROKU_API_KEY"]}'})
+		botSettings = json.loads(response.content.decode('utf-8')) 
 	except Exception as e:
 		#there must not be a settings file ig
-		print(f'no settings file, or {e}')
+		print(f'no settings set, or {e}')
 	
 	#the bot prefix, the bot looks for this to see if it should do something
 	prefix = 'h!'
@@ -149,6 +151,5 @@ class BotSettings():
 
 	#used to save the vaiables to file
 	def quietSave():
-		settfile = open('bot.sett', 'wb')
-		pickle.dump(BotSettings.botSettingsToSave, settfile)
-		settfile.close()
+		response = requests.patch(url='https://api.heroku.com/apps/unifoxbot/config-vars', json=BotSettings.botSettingsToSave, headers={'Accept':'application/vnd.heroku+json; version=3', 'Authorization': f'Bearer {os.environ["HEROKU_API_KEY"]}'})
+		botSettings = json.loads(response.content.decode('utf-8')) 
