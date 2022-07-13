@@ -6,6 +6,7 @@ import pickle
 import os
 import requests
 import json
+import ast
 
 #---the bot settings---#
 #houses all the variables used throughout the bot
@@ -33,6 +34,17 @@ class BotSettings():
 	warnlist = dict()
 	try:
 		warnlist = botSettings['warnlist']
+		warnlist1 = list()
+		for char in warnlist:
+			if char == '=':
+				warnlist1.append(':')
+			elif char == '>':
+				warnlist1.append(' ')
+			else:
+				warnlist1.append(char)
+		warnlist = ''.join(warnlist1)
+		warnlistfinal = ast.literal_eval(warnlist)
+		warnlist = warnlistfinal
 		print(warnlist)
 	except:
 		print('empty warnlist')
@@ -46,9 +58,15 @@ class BotSettings():
 		print('default vol set')
 	
 	#the channels that should be ignored by the bot
-	ignoreChannels = ['spam', 'Spam']
+	ignoreChannels = ['spam', 'Spam', 'announcements', 'Announcements']
 	try:
-		ignoreChannels = botSettings['ignoreChannels']
+		ignoreChannelstodo = botSettings['ignoreChannels']
+		ignoreChannelsl = ignoreChannelstodo.split(', ')
+		ignoreChannelsfinal = list()
+		for chan in ignoreChannelsl:
+			chan = chan.strip('[]""')
+			ignoreChannelsfinal.append(chan)
+		ignoreChannels = ignoreChannelsfinal
 		print(ignoreChannels)
 	except:
 		print('empty ignore list')
@@ -86,14 +104,26 @@ class BotSettings():
 	#the channels that get pinged upon an announcement
 	announceChannels = ['announcements', 'Announcements', 'test']
 	try:
-		announceChannels = botSettings['announceChannels']
+		announceChannelstodo = botSettings['announceChannels']
+		announceChannelsl = announceChannelstodo.split(', ')
+		announceChannelsfinal = list()
+		for chan in announceChannelsl:
+			chan = chan.strip('[]""')
+			announceChannelsfinal.append(chan)
+		announceChannels = announceChannelsfinal
 		print(announceChannels)
 	except:
 		print('default announcement channels')
 
 	clearIgnore = list()
 	try:
-		clearIgnore = botSettings['clearIgnore']
+		clearIgnoretodo = botSettings['clearIgnore']
+		clearIgnorel = clearIgnoretodo.split(', ')
+		clearIgnorefinal = list()
+		for ci in clearIgnorel:
+			ci = ci.strip('[]""')
+			clearIgnorefinal.append(ci)
+		clearIgnore = clearIgnorefinal
 		print(clearIgnore)
 	except:
 		print('no clear ignores')
@@ -105,27 +135,33 @@ class BotSettings():
 	#to set the prefix
 	def setPrefix(newpre):
 		BotSettings.prefix = newpre
-		BotSettings.botSettingsToSave['prefix'] = newpre
+		BotSettings.botSettingsToSave['prefix'] = BotSettings.prefix
+		BotSettings.quietSave()
 	#to set the volume
 	def setMusicVol(newvol):
 		BotSettings.setVolume = newvol
-		BotSettings.botSettingsToSave['musicVol'] = newvol
+		BotSettings.botSettingsToSave['musicVol'] = BotSettings.setVolume
+		BotSettings.quietSave()
 	#to set the warn limit
 	def setWarnLimit(newlimit):
 		BotSettings.warnlimit = newlimit
-		BotSettings.botSettingsToSave['warnlimit'] = newlimit
+		BotSettings.botSettingsToSave['warnlimit'] = BotSettings.warnlimit
+		BotSettings.quietSave()
 	#to set the timeout channel
 	def setTimeoutChan(newindex):
 		BotSettings.timeoutChanindex = newindex
-		BotSettings.botSettingsToSave['timeoutChanindex'] = newindex
+		BotSettings.botSettingsToSave['timeoutChanindex'] = BotSettings.timeoutChanindex
+		BotSettings.quietSave()
 
 	def addtoignore(new):
 		BotSettings.ignoreChannels.append(new)
-		BotSettings.botSettingsToSave['ignoreChannels'].append(new)
+		BotSettings.botSettingsToSave['ignoreChannels'] = BotSettings.ignoreChannels
+		BotSettings.quietSave()
 
 	def delfromignore(index):
 		BotSettings.ignoreChannels.pop(index)
-		BotSettings.botSettingsToSave['ignoreChannels'].pop(index)
+		BotSettings.botSettingsToSave['ignoreChannels'] = BotSettings.ignoreChannels
+		BotSettings.quietSave()
 
 	def addtobadwords(new):
 		print(f'adding {new}')
@@ -138,25 +174,32 @@ class BotSettings():
 
 	def delfrombadwords(index):
 		BotSettings.badwords.pop(index)
-		BotSettings.botSettingsToSave['badwords'].pop(index)
+		BotSettings.botSettingsToSave['badwords'] = BotSettings.badwords
+		BotSettings.quietSave()
 
 	def addtoannounce(new):
 		BotSettings.announceChannels.append(new)
-		BotSettings.botSettingsToSave['announceChannels'].append(new)
+		BotSettings.botSettingsToSave['announceChannels'] = BotSettings.announceChannels
+		BotSettings.quietSave()
 
 	def delfromannounce(index):
 		BotSettings.announceChannels.pop(index)
-		BotSettings.botSettingsToSave['announceChannels'].pop(index)
+		BotSettings.botSettingsToSave['announceChannels'] = BotSettings.announceChannels
+		BotSettings.quietSave()
 
 	def addtoclearignore(new):
 		BotSettings.clearIgnore.append(new)
-		BotSettings.botSettingsToSave['clearIgnore'].append(new)
+		BotSettings.botSettingsToSave['clearIgnore'] = BotSettings.clearIgnore
+		BotSettings.quietSave()
 
 	def delfromclearignore(index):
 		BotSettings.clearIgnore.pop(index)
-		BotSettings.botSettingsToSave['clearIgnore'].pop(index)
+		BotSettings.botSettingsToSave['clearIgnore'] = BotSettings.clearIgnore
+		BotSettings.quietSave()
 
 	#used to save the vaiables to file
 	def quietSave():
 		response = requests.patch(url='https://api.heroku.com/apps/unifoxbot/config-vars', json=BotSettings.botSettingsToSave, headers={'Accept':'application/vnd.heroku+json; version=3', 'Authorization': f'Bearer {os.environ["HEROKU_API_KEY"]}'})
 		botSettings = json.loads(response.content.decode('utf-8')) 
+		print(response)
+		print(botSettings)
