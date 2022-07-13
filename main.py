@@ -188,8 +188,10 @@ class Main():
 		if message.channel.name.lower() in BotSettings.ignoreChannels:
 			return
 		for word in message.content.split():
+			print(word)
 			for badword in BotSettings.badwords:
 				if not word.lower().find(badword) == -1:
+					print(f'found word {badword}')
 					time.sleep(0.5)
 					await message.delete() #if so, delete the message
 		if message.content.startswith(f'{BotSettings.prefix}help'):
