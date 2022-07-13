@@ -56,7 +56,13 @@ class BotSettings():
 	#the blacklist of words that the bot looks for to check if it should delete a message
 	badwords = [] #empty by default (may or may not be empty to show in class lol)
 	try:
-		badwords = botSettings['badwords']
+		badwordstodo = botSettings['badwords']
+		badwordsl = badwordstodo.split(', ')
+		badwordsfinal = list()
+		for word in badwordsl:
+			word = word.strip('[]""')
+			badwordsfinal.append(word)
+		badwords = badwordsfinal
 		print(badwords)
 	except:
 		print('no bad words')
