@@ -190,6 +190,8 @@ class Main():
 		for word in message.content.split():
 			print(word)
 			for badword in BotSettings.badwords:
+				print(badword)
+				print(word.lower().find(badword))
 				if not word.lower().find(badword) == -1:
 					print(f'found word {badword}')
 					time.sleep(0.5)
