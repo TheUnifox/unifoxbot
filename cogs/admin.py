@@ -8,6 +8,8 @@ import discord.ext
 import time
 import datetime
 import pickle
+import requests
+import json
 from main import Main
 from cogs.botSettings import BotSettings
 from discord.ext import commands
@@ -154,18 +156,28 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 	@commands.command(name='warn', help='warns given user, and add 1 to the warn counts. WARNING: will kick a user if warn count for them goes above a limit!', brief='warns a user, use help warn to see more')
 	@commands.has_any_role('admin', 'owner', 'Staff')
 	async def warn(self, ctx, *, member: discord.Member):
+		
 		await ctx.send(f'@{member}... you have been warned')
 		try:
+			embed = discord.Embed(title='Warning!', colour=discord.Colour.red())
+			embed.add_field(name=f'@{member.id}, you have been warned', value=f'this is your #{BotSettings.warnlist[member]} warning', inline=True)
+			embed.set_thumbnail(url=member.avatar_url)
 			BotSettings.warnlist[member] += 1
-			BotSettings.botSettingsToSave['warnlist'][member] += 1
+			BotSettings.botSettingsToSave['warnlist'][member] = BotSettings.warnlist[member]
 			if BotSettings.warnlist[member] == BotSettings.warnlimit:
-				ctx.send(f'@{member}! you are at the warn limit, once more and you are kicked!')
+				embed.set_field_at(0, name=f'@{member.id}, you have been warned', value=f'this is your #{BotSettings.warnlist[member]} warning. You are at the warn limit, once more and you are kicked! Be careful not to break the rules, maybe go familiarize yourself with them.', inline=True)
 			if BotSettings.warnlist[member] == BotSettings.warnlimit + 1:
 				AdminCommands.kick(ctx, member, 'You have exceeded your warn limit.')
 			if BotSettings.warnlist[member] == BotSettings.warnlimit + 2:
 				AdminCommands.ban(ctx, member, 'Your warnings were not reset, and you had been kicked but returned. You have now been banned.')
+			BotSettings.quietSave()
 		except:
+			embed = discord.Embed(title='Warning!', colour=discord.Colour.red())
+			embed.add_field(name=f'@{member.id}, you have been warned', value=f'this is your first warning, maybe be a little more carful next time :DD', inline=True)
+			embed.set_thumbnail(url=member.avatar_url)
 			BotSettings.warnlist[member] = 1
+			BotSettings.botSettingsToSave['warnlist'][member] = BotSettings.warnlist[member]
+			BotSettings.quietSave()
 
 	#used to clear a users warnings
 	@commands.command(name='delWarn', help='removes given users warnings')
@@ -174,7 +186,8 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 		await ctx.send(f'@{member}, warnings removed!')
 		try:
 			BotSettings.warnlist[member] -= BotSettings.warnlist[member]
-			BotSettings.botSettingsToSave['warnlist'][member] -= BotSettings.botSettingsToSave['warnlist'][member]
+			BotSettings.botSettingsToSave['warnlist'][member] = BotSettings.warnlist[member]
+			BotSettings.quietSave()
 		except:
 			await ctx.send(f'{member} has no warnings on record')
 
