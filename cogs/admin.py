@@ -169,13 +169,14 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 			if BotSettings.warnlist[str(member)] == BotSettings.warnlimit + 2:
 				AdminCommands.ban(ctx, member, 'Your warnings were not reset, and you had been kicked but returned. You have now been banned.')
 			BotSettings.quietSave()
-		except:
+		except Exception as e:
 			embed = discord.Embed(title='Warning!', colour=discord.Colour.red())
 			embed.add_field(name=f'@{member.id}, you have been warned', value=f'this is your first warning, maybe be a little more carful next time :DD', inline=True)
 			embed.set_thumbnail(url=member.avatar_url)
 			BotSettings.warnlist[str(member)] = 1
 			BotSettings.botSettingsToSave['warnlist'][str(member)] = BotSettings.warnlist[str(member)]
 			BotSettings.quietSave()
+			print(e)
 		await ctx.send(embed=embed)
 
 	#used to clear a users warnings
@@ -187,8 +188,9 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 			BotSettings.warnlist[str(member)] -= BotSettings.warnlist[member]
 			BotSettings.botSettingsToSave['warnlist'][str(member)] = BotSettings.warnlist[str(member)]
 			BotSettings.quietSave()
-		except:
+		except Exception as e:
 			await ctx.send(f'{member} has no warnings on record')
+			print(e)
 
 	#used to add a word to the blacklist of words that shall not be spoken
 	@commands.command(name='addbadword', aliases = ['abw'], help='used to add a word to a blacklist of words')
