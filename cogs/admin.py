@@ -157,17 +157,22 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 	@commands.has_any_role('admin', 'owner', 'Staff')
 	async def warn(self, ctx, *, member: discord.Member):
 		try:
+			print('making embed)
 			embed = discord.Embed(title='Warning!', colour=discord.Colour.red())
 			embed.add_field(name=f'@{member.id}, you have been warned', value=f'this is your #{BotSettings.warnlist[member]} warning', inline=True)
 			embed.set_thumbnail(url=member.avatar_url)
+			print('embed made')
 			BotSettings.warnlist[str(member)] += 1
+			print('warnings incremented')
 			BotSettings.botSettingsToSave['warnlist'][str(member)] = BotSettings.warnlist[str(member)]
+			print('settingstosave set')
 			if BotSettings.warnlist[str(member)] == BotSettings.warnlimit:
 				embed.set_field_at(0, name=f'@{member.id}, you have been warned', value=f'this is your #{BotSettings.warnlist[member]} warning. You are at the warn limit, once more and you are kicked! Be careful not to break the rules, maybe go familiarize yourself with them.', inline=True)
 			if BotSettings.warnlist[str(member)] == BotSettings.warnlimit + 1:
 				AdminCommands.kick(ctx, member, 'You have exceeded your warn limit.')
 			if BotSettings.warnlist[str(member)] == BotSettings.warnlimit + 2:
 				AdminCommands.ban(ctx, member, 'Your warnings were not reset, and you had been kicked but returned. You have now been banned.')
+			print('saving')
 			BotSettings.quietSave()
 		except Exception as e:
 			embed = discord.Embed(title='Warning!', colour=discord.Colour.red())
