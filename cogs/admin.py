@@ -159,7 +159,9 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 		try:
 			print('making embed')
 			embed = discord.Embed(title='Warning!', colour=discord.Colour.red())
+			print('embed made, setting field')
 			embed.add_field(name=f'@{member.id}, you have been warned', value=f'this is your #{BotSettings.warnlist[member]} warning', inline=True)
+			print('field set, setting img')
 			embed.set_thumbnail(url=member.avatar_url)
 			print('embed made')
 			BotSettings.warnlist[str(member)] += 1
