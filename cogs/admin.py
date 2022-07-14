@@ -193,7 +193,7 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 	async def delWarn(self, ctx, *, member: discord.Member):
 		await ctx.send(f'@{member}, warnings removed!')
 		try:
-			BotSettings.warnlist[str(member)] -= BotSettings.warnlist[member]
+			BotSettings.warnlist[str(member)] -= BotSettings.warnlist[str(member)]
 			BotSettings.botSettingsToSave['warnlist'][str(member)] = BotSettings.warnlist[str(member)]
 			BotSettings.quietSave()
 		except Exception as e:
