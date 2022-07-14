@@ -50,7 +50,7 @@ class GeneralCommands(commands.Cog, name='General Commands', description='Comman
 	@commands.command(name='showWarns', help='shows the number of warnings for a given user')
 	async def showWarns(self, ctx, *, member: discord.Member):
 		try:
-			await ctx.send(BotSettings.warnlist[member])
+			await ctx.send(BotSettings.warnlist[str(member)])
 		except:
 			await ctx.send('member has no warnings')
 
