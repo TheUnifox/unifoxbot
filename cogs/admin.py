@@ -153,9 +153,9 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 	#if a user gets to the warn limit, it notifies the person
 	#if they then exceed by 1, they are kicked. they can rejoin, but warns are only manually cleared
 	#if they exceed by 2, by being kicked and rejoining, they are banned
-	@commands.command(name='warn', help='warns given user, and add 1 to the warn counts. WARNING: will kick a user if warn count for them goes above a limit!', brief='warns a user, use help warn to see more')
+	@commands.command(name='warn', help='warns given user, and add 1 to the warn counts. WARNING: will kick a user if warn count for them goes above a limit! now requires reason', brief='warns a user, use help warn to see more')
 	@commands.has_any_role('admin', 'owner', 'Staff')
-	async def warn(self, ctx, *, member: discord.Member):
+	async def warn(self, ctx, member: discord.Member, *, reason):
 		try:
 			print('making embed')
 			embed = discord.Embed(title='Warning!', colour=discord.Colour.red())
@@ -184,6 +184,7 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 			BotSettings.botSettingsToSave['warnlist'][str(member)] = BotSettings.warnlist[str(member)]
 			BotSettings.quietSave()
 			print(f'error: {e}')
+		embed.add_field(name='Warning reason', value=f'You have been warned for {reason}.', inline=True)
 		await ctx.send(embed=embed)
 
 	#used to clear a users warnings
