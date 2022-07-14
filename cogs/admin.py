@@ -156,8 +156,6 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 	@commands.command(name='warn', help='warns given user, and add 1 to the warn counts. WARNING: will kick a user if warn count for them goes above a limit!', brief='warns a user, use help warn to see more')
 	@commands.has_any_role('admin', 'owner', 'Staff')
 	async def warn(self, ctx, *, member: discord.Member):
-		
-		await ctx.send(f'@{member}... you have been warned')
 		try:
 			embed = discord.Embed(title='Warning!', colour=discord.Colour.red())
 			embed.add_field(name=f'@{member.id}, you have been warned', value=f'this is your #{BotSettings.warnlist[member]} warning', inline=True)
@@ -178,6 +176,7 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 			BotSettings.warnlist[member] = 1
 			BotSettings.botSettingsToSave['warnlist'][member] = BotSettings.warnlist[member]
 			BotSettings.quietSave()
+		await ctx.send(embed=embed)
 
 	#used to clear a users warnings
 	@commands.command(name='delWarn', help='removes given users warnings')
