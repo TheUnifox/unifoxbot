@@ -18,15 +18,22 @@ from discord.ext import commands
 #this houses all the commands that only server admin can use
 class AdminCommands(commands.Cog, name="Admin Commands", description='Commands for only admin to use'):
 
+	nospam = False
 	#these two functions probably will be deleted eventually lol
 	#they just spam a channel forever, they get started a bit lower
 	async def spam1(ctx):
-		await ctx.send("spamming")
-		await AdminCommands.spam2(ctx)
+		if nospam:
+			return
+		elif not nospam:
+			await ctx.send("spamming")
+			await AdminCommands.spam2(ctx)
 
 	async def spam2(ctx):
-		await ctx.send("spamming")
-		await AdminCommands.spam1(ctx)
+		if nospam:
+			return
+		elif not nospam:
+			await ctx.send("spamming")
+			await AdminCommands.spam1(ctx)
 
 	#a command to kick people out of a server
 	@commands.command(name='kick', help='used to kick a user with a reason')
@@ -55,6 +62,14 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 	async def spam(self, ctx):
 		await ctx.send('spamming...')
 		await AdminCommands.spam1(ctx)
+		
+	@commands.command(name='endspam', help="Starts spamming, don't use. Bot will need to be shut down to stop")
+	@commands.has_any_role('admin', 'owner', 'Staff')
+	async def endspam(self, ctx):
+		await ctx.send('ending spamming...')
+		AdminCommands.nospam = True
+		time.sleep(5)
+		AdminCommands.nospam = False
 	
 	#a command to mute and unmute someone, this makes them unable to speak in a voice channel
 	@commands.command(name='mute', help='mutes a user')
@@ -160,7 +175,7 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 			print('making embed')
 			embed = discord.Embed(title='Warning!', colour=discord.Colour.red())
 			print('embed made, setting field')
-			embed.add_field(name=f'@{member.id}, you have been warned', value=f'this is your #{(BotSettings.warnlist[str(member)])+1} warning', inline=True)
+			embed.add_field(name=f'{member.mention}, you have been warned', value=f'this is your #{(BotSettings.warnlist[str(member)])+1} warning', inline=True)
 			print('field set, setting img')
 			embed.set_thumbnail(url=member.avatar_url)
 			print('embed made')
@@ -169,7 +184,7 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 			BotSettings.botSettingsToSave['warnlist'][str(member)] = BotSettings.warnlist[str(member)]
 			print('settingstosave set')
 			if BotSettings.warnlist[str(member)] == BotSettings.warnlimit:
-				embed.set_field_at(0, name=f'@{member.id}, you have been warned', value=f'this is your #{(BotSettings.warnlist[str(member)])+1} warning. You are at the warn limit, once more and you are kicked! Be careful not to break the rules, maybe go familiarize yourself with them.', inline=True)
+				embed.set_field_at(0, name=f'{member.mention}, you have been warned', value=f'this is your #{(BotSettings.warnlist[str(member)])+1} warning. You are at the warn limit, once more and you are kicked! Be careful not to break the rules, maybe go familiarize yourself with them.', inline=True)
 			if BotSettings.warnlist[str(member)] == BotSettings.warnlimit + 1:
 				AdminCommands.kick(ctx, member, 'You have exceeded your warn limit.')
 			if BotSettings.warnlist[str(member)] == BotSettings.warnlimit + 2:
@@ -178,7 +193,7 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 			BotSettings.quietSave()
 		except Exception as e:
 			embed = discord.Embed(title='Warning!', colour=discord.Colour.red())
-			embed.add_field(name=f'@{member.id}, you have been warned', value=f'this is your first warning, maybe be a little more carful next time :DD', inline=True)
+			embed.add_field(name=f'{member.mention}, you have been warned', value=f'this is your first warning, maybe be a little more carful next time :DD', inline=True)
 			embed.set_thumbnail(url=member.avatar_url)
 			BotSettings.warnlist[str(member)] = 1
 			BotSettings.botSettingsToSave['warnlist'][str(member)] = BotSettings.warnlist[str(member)]
@@ -191,7 +206,7 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 	@commands.command(name='delWarn', help='removes given users warnings')
 	@commands.has_any_role('admin', 'owner', 'Staff')
 	async def delWarn(self, ctx, *, member: discord.Member):
-		await ctx.send(f'@{member}, warnings removed!')
+		await ctx.send(f'{member.mention}, warnings removed!')
 		try:
 			BotSettings.warnlist[str(member)] -= BotSettings.warnlist[str(member)]
 			BotSettings.botSettingsToSave['warnlist'][str(member)] = BotSettings.warnlist[str(member)]
