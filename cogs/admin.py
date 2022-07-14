@@ -157,7 +157,7 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 	@commands.has_any_role('admin', 'owner', 'Staff')
 	async def warn(self, ctx, *, member: discord.Member):
 		try:
-			print('making embed)
+			print('making embed')
 			embed = discord.Embed(title='Warning!', colour=discord.Colour.red())
 			embed.add_field(name=f'@{member.id}, you have been warned', value=f'this is your #{BotSettings.warnlist[member]} warning', inline=True)
 			embed.set_thumbnail(url=member.avatar_url)
