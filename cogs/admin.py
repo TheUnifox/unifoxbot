@@ -176,7 +176,7 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 			BotSettings.warnlist[str(member)] = 1
 			BotSettings.botSettingsToSave['warnlist'][str(member)] = BotSettings.warnlist[str(member)]
 			BotSettings.quietSave()
-			print(e)
+			print(f'error: {e}')
 		await ctx.send(embed=embed)
 
 	#used to clear a users warnings
@@ -190,7 +190,7 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 			BotSettings.quietSave()
 		except Exception as e:
 			await ctx.send(f'{member} has no warnings on record')
-			print(e)
+			print(f'error: {e}')
 
 	#used to add a word to the blacklist of words that shall not be spoken
 	@commands.command(name='addbadword', aliases = ['abw'], help='used to add a word to a blacklist of words')
