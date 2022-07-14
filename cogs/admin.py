@@ -160,7 +160,7 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 			print('making embed')
 			embed = discord.Embed(title='Warning!', colour=discord.Colour.red())
 			print('embed made, setting field')
-			embed.add_field(name=f'@{member.id}, you have been warned', value=f'this is your #{BotSettings.warnlist[str(member)]} warning', inline=True)
+			embed.add_field(name=f'@{member.id}, you have been warned', value=f'this is your #{(BotSettings.warnlist[str(member)])+1} warning', inline=True)
 			print('field set, setting img')
 			embed.set_thumbnail(url=member.avatar_url)
 			print('embed made')
@@ -169,7 +169,7 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 			BotSettings.botSettingsToSave['warnlist'][str(member)] = BotSettings.warnlist[str(member)]
 			print('settingstosave set')
 			if BotSettings.warnlist[str(member)] == BotSettings.warnlimit:
-				embed.set_field_at(0, name=f'@{member.id}, you have been warned', value=f'this is your #{BotSettings.warnlist[str(member)]} warning. You are at the warn limit, once more and you are kicked! Be careful not to break the rules, maybe go familiarize yourself with them.', inline=True)
+				embed.set_field_at(0, name=f'@{member.id}, you have been warned', value=f'this is your #{(BotSettings.warnlist[str(member)])+1} warning. You are at the warn limit, once more and you are kicked! Be careful not to break the rules, maybe go familiarize yourself with them.', inline=True)
 			if BotSettings.warnlist[str(member)] == BotSettings.warnlimit + 1:
 				AdminCommands.kick(ctx, member, 'You have exceeded your warn limit.')
 			if BotSettings.warnlist[str(member)] == BotSettings.warnlimit + 2:
