@@ -160,21 +160,21 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 			embed = discord.Embed(title='Warning!', colour=discord.Colour.red())
 			embed.add_field(name=f'@{member.id}, you have been warned', value=f'this is your #{BotSettings.warnlist[member]} warning', inline=True)
 			embed.set_thumbnail(url=member.avatar_url)
-			BotSettings.warnlist[member] += 1
-			BotSettings.botSettingsToSave['warnlist'][member] = BotSettings.warnlist[member]
-			if BotSettings.warnlist[member] == BotSettings.warnlimit:
+			BotSettings.warnlist[str(member)] += 1
+			BotSettings.botSettingsToSave['warnlist'][str(member)] = BotSettings.warnlist[str(member)]
+			if BotSettings.warnlist[str(member)] == BotSettings.warnlimit:
 				embed.set_field_at(0, name=f'@{member.id}, you have been warned', value=f'this is your #{BotSettings.warnlist[member]} warning. You are at the warn limit, once more and you are kicked! Be careful not to break the rules, maybe go familiarize yourself with them.', inline=True)
-			if BotSettings.warnlist[member] == BotSettings.warnlimit + 1:
+			if BotSettings.warnlist[str(member)] == BotSettings.warnlimit + 1:
 				AdminCommands.kick(ctx, member, 'You have exceeded your warn limit.')
-			if BotSettings.warnlist[member] == BotSettings.warnlimit + 2:
+			if BotSettings.warnlist[str(member)] == BotSettings.warnlimit + 2:
 				AdminCommands.ban(ctx, member, 'Your warnings were not reset, and you had been kicked but returned. You have now been banned.')
 			BotSettings.quietSave()
 		except:
 			embed = discord.Embed(title='Warning!', colour=discord.Colour.red())
 			embed.add_field(name=f'@{member.id}, you have been warned', value=f'this is your first warning, maybe be a little more carful next time :DD', inline=True)
 			embed.set_thumbnail(url=member.avatar_url)
-			BotSettings.warnlist[member] = 1
-			BotSettings.botSettingsToSave['warnlist'][member] = BotSettings.warnlist[member]
+			BotSettings.warnlist[str(member)] = 1
+			BotSettings.botSettingsToSave['warnlist'][str(member)] = BotSettings.warnlist[str(member)]
 			BotSettings.quietSave()
 		await ctx.send(embed=embed)
 
@@ -184,8 +184,8 @@ class AdminCommands(commands.Cog, name="Admin Commands", description='Commands f
 	async def delWarn(self, ctx, *, member: discord.Member):
 		await ctx.send(f'@{member}, warnings removed!')
 		try:
-			BotSettings.warnlist[member] -= BotSettings.warnlist[member]
-			BotSettings.botSettingsToSave['warnlist'][member] = BotSettings.warnlist[member]
+			BotSettings.warnlist[str(member)] -= BotSettings.warnlist[member]
+			BotSettings.botSettingsToSave['warnlist'][str(member)] = BotSettings.warnlist[str(member)]
 			BotSettings.quietSave()
 		except:
 			await ctx.send(f'{member} has no warnings on record')
