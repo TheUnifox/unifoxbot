@@ -187,12 +187,13 @@ class Main():
 			return
 		if message.channel.name.lower() in BotSettings.ignoreChannels:
 			return
-		for badword in BotSettings.badwords:
-			messagecont = message.content.lower().replace(' ', '')
-			if not messagecont.find(badword) == -1:
-				print(f'found word {badword}')
-				time.sleep(0.5)
-				await message.delete() #if so, delete the message
+		if not message.channel.nsfw:
+			for badword in BotSettings.badwords:
+				messagecont = message.content.lower().replace(' ', '')
+				if not messagecont.find(badword) == -1:
+					print(f'found word {badword}')
+					time.sleep(0.5)
+					await message.delete() #if so, delete the message
 		if message.content.startswith(f'{BotSettings.prefix}help'):
 			destination = message.channel
 			category = message.content
