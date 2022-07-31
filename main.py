@@ -64,7 +64,7 @@ class Main():
 	#it creates a chat with person to welcome them
 	@bot.event
 	async def on_member_join(member):
-		if str(member).startswith('自動の共栄圏は'):
+		if str(member).startswith('自動の共栄圏は') or str(member).startswith('にほんご'):
 			await member.kick(reason='bot :D')
 			return
 		chanfound = False
