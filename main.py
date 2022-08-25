@@ -187,6 +187,14 @@ class Main():
 			return
 		if message.channel.name.lower() in BotSettings.ignoreChannels:
 			return
+		#just detect an @everyone for now...
+		if not message.content.lower().find("@everyone") == -1:
+			if not message.channel in BotSettings.ignoreChannels:
+				print("someone @everyone...")
+				time.sleep(0.5)
+				await message.delete()
+		'''
+		Disable this for now until I find a better way of detection
 		if not message.channel.nsfw:
 			for badword in BotSettings.badwords:
 				messagecont = message.content.lower().replace(' ', '')
@@ -194,6 +202,7 @@ class Main():
 					print(f'found word {badword}')
 					time.sleep(0.5)
 					await message.delete() #if so, delete the message
+		'''
 		if message.content.startswith(f'{BotSettings.prefix}help'):
 			destination = message.channel
 			category = message.content
