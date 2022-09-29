@@ -165,7 +165,7 @@ class Furry(commands.Cog, name="Furry Commands", description="Commands for furri
 
 #---NSFW furry commands class ;)---
 #houses all the fun furry commands
-class NSFWFurryCommands(commands.Cog, name="NSFW Furry Commands", description="The fun commands for furries ;)"):
+class NsfwFurryCommands(commands.Cog, name="Nsfw Furry Commands", description="The fun commands for furries ;)"):
 
 	async def nsfwcheck(channel):
 		if isinstance(channel, discord.channel.DMChannel):
@@ -367,7 +367,7 @@ class NSFWFurryCommands(commands.Cog, name="NSFW Furry Commands", description="T
 
 #---NSFW+ furry commands class ;)---
 #houses all the fun furry extras commands
-class NSFWFurryCommandsplus(commands.Cog, name="NSFW Furry Commands+", description="The fun extras commands for furries ;)"):
+class NsfwFurryCommandsplus(commands.Cog, name="Nsfw Furry Commands+", description="The fun extras commands for furries ;)"):
 
 	async def nsfwcheck(channel):
 		if isinstance(channel, discord.channel.DMChannel):
@@ -506,5 +506,5 @@ class NSFWFurryCommandsplus(commands.Cog, name="NSFW Furry Commands+", descripti
 #sets up the cogs ig idk
 def setup(bot):
 	bot.add_cog(Furry(bot))
-	bot.add_cog(NSFWFurryCommands(bot))
-	bot.add_cog(NSFWFurryCommandsplus(bot))
+	bot.add_cog(NsfwFurryCommands(bot))
+	bot.add_cog(NsfwFurryCommandsplus(bot))
