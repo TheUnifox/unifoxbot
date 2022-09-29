@@ -215,11 +215,11 @@ class Main():
 					embed.add_field(name=cog, value=Main.bot.cogs[cog].description)
 				embed.set_footer(text='type (prefix) help (category) for info on a category \neg. tec help Furry Commands')
 			else:
-				if len(Main.bot.cogs[category[5+len(BotSettings.prefix):]].get_commands()) > 25:
+				if len(Main.bot.cogs[category[6+len(BotSettings.prefix):].capitalize()].get_commands()) > 25:
 					commno = 0
 					embed = discord.Embed(title='Help!', description=f'Commands in {category}', colour=discord.Colour.red())
 					embed2 = discord.Embed(title='Help! (cont.)', description=f'Commands in {category}', colour=discord.Colour.red())
-					for command in Main.bot.cogs[category[5+len(BotSettings.prefix):]].get_commands():
+					for command in Main.bot.cogs[category[6+len(BotSettings.prefix):].capitalize()].get_commands():
 						print(command)
 						commno += 1
 						if commno > 25:
@@ -228,7 +228,7 @@ class Main():
 							embed.add_field(name=command, value=command.help)
 				else:
 					embed = discord.Embed(title='Help!', description=f'Commands in {category}', colour=discord.Colour.red())
-					for command in Main.bot.cogs[category[5+len(BotSettings.prefix):]].get_commands():
+					for command in Main.bot.cogs[category[6+len(BotSettings.prefix):].capitalize()].get_commands():
 						print(command)
 						embed.add_field(name=command, value=command.help)
 			print(embed)
