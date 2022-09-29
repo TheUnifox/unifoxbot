@@ -113,9 +113,9 @@ class Main():
 	#this is when someone becomes online or offline, not sure it works
 	@bot.event
 	async def on_user_update(ctx, user, status, activities):
-	    await ctx.send(f"{user} is now {status}")
-	    if activities != None:
-	        await ctx.send(f"and activity is now {activities}")
+		await ctx.send(f"{user} is now {status}")
+		if activities != None:
+			await ctx.send(f"and activity is now {activities}")
 
 
 	#---youtube-dl---#
