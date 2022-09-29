@@ -79,7 +79,7 @@ class Main():
 						return
 					elif not chanfound:
 						print(f"serching channel {channel.name}")
-						if channel.name == 'welcomes':
+						if channel.name == 'welcomes-👋':
 							chanfound = True
 							print("found channel")
 							embed=discord.Embed(title="Welcome!", color=discord.Colour.random(seed=(str(member))))
