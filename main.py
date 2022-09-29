@@ -204,7 +204,7 @@ class Main():
 					time.sleep(0.5)
 					await message.delete() #if so, delete the message
 		'''
-		if message.content.lower().startswith('hi') or message.content.lower().startswith('hello'):
+		if message.content.lower().startswith('hi') or message.content.lower().startswith('hello') or message.content.lower().startswith('hai') or message.content.lower().startswith('hey') or message.content.lower().startswith('hei') or message.content.lower().startswith('helo'):
                         await message.channel.send("Hi!")
 		if message.content.lower().startswith(f'{BotSettings.prefix} help'):
 			destination = message.channel
