@@ -7,6 +7,7 @@
 #time is used once to wait a sec to not cause issues. all discord is for the bot to have basic function. botSettings holds... the bot settings
 import os
 import string
+import random
 import asyncio
 import nacl
 import ffmpeg
@@ -205,7 +206,8 @@ class Main():
 					await message.delete() #if so, delete the message
 		'''
 		if message.content.lower().startswith('hi') or message.content.lower().startswith('hello') or message.content.lower().startswith('hai') or message.content.lower().startswith('hey') or message.content.lower().startswith('hei') or message.content.lower().startswith('helo'):
-                        await message.channel.send("Hi!")
+			responses = ["Hi!", "Hello!", "Hihi!", "Hai!", "Hey!"]
+			await message.channel.send(random.choice(responses))
 		if message.content.lower().startswith(f'{BotSettings.prefix} help'):
 			destination = message.channel
 			category = message.content.lower()
