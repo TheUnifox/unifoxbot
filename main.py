@@ -203,17 +203,17 @@ class Main():
 					time.sleep(0.5)
 					await message.delete() #if so, delete the message
 		'''
-		if message.content.startswith(f'{BotSettings.prefix}help'):
+		if message.content.lower().startswith(f'{BotSettings.prefix} help'):
 			destination = message.channel
-			category = message.content
+			category = message.content.lower()
 			commno = 0
-			if category == f'{BotSettings.prefix}help':
+			if category == f'{BotSettings.prefix} help':
 				embed = discord.Embed(title='Help!', description='These are the categories.', colour=discord.Colour.red())
 				print(Main.bot.cogs)
 				for cog in Main.bot.cogs:
 					print(cog)
 					embed.add_field(name=cog, value=Main.bot.cogs[cog].description)
-				embed.set_footer(text='type (prefix)help (category) for info on a category \neg. h!help Furry Commands (capitalization is important for now)')
+				embed.set_footer(text='type (prefix) help (category) for info on a category \neg. tec help Furry Commands')
 			else:
 				if len(Main.bot.cogs[category[5+len(BotSettings.prefix):]].get_commands()) > 25:
 					commno = 0
