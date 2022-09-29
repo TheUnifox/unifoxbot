@@ -19,7 +19,7 @@ class BotSettings():
 		print(f'no settings file, or {e}')
 	
 	#the bot prefix, the bot looks for this to see if it should do something
-	prefix = 'h!'
+	prefix = 'tec'
 	try:
 		prefix = botSettings['prefix']
 	except:
