@@ -6,6 +6,7 @@
 #os is for environment variables like the bot token. nacl and ffmpeg are for playing audio, and youtube-dl is for getting the audio
 #time is used once to wait a sec to not cause issues. all discord is for the bot to have basic function. botSettings holds... the bot settings
 import os
+import string
 import asyncio
 import nacl
 import ffmpeg
