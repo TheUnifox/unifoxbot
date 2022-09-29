@@ -6,6 +6,7 @@
 #os is for environment variables like the bot token. nacl and ffmpeg are for playing audio, and youtube-dl is for getting the audio
 #time is used once to wait a sec to not cause issues. all discord is for the bot to have basic function. botSettings holds... the bot settings
 import os
+import string
 import asyncio
 import nacl
 import ffmpeg
@@ -23,12 +24,16 @@ from discord.ext.commands import has_permissions, CheckFailure, check
 #---main class---#
 #this houses most of this files stuff
 class Main():
+	
+	intents = discord.Intents(messages=True, guilds=True)
+	intents.members = True
 
 	#this is to get the discord bot, and set some stuff for it
 	bot = commands.Bot(
-    command_prefix = BotSettings.prefix,  # Change to desired prefix
-    case_insensitive=True,  # Commands aren't case-sensitive
-		strip_after_prefix=True
+    		command_prefix = BotSettings.prefix,  # Change to desired prefix
+    		case_insensitive=True,  # Commands aren't case-sensitive
+		strip_after_prefix=True,
+		intents=intents
 	)
 
 	bot.ses = aiohttp.ClientSession()#get a client session for sumn idk
@@ -60,13 +65,34 @@ class Main():
 	#it creates a chat with person to welcome them
 	@bot.event
 	async def on_member_join(member):
+		if str(member).startswith('自動の共栄圏は') or str(member).startswith('にほんご'):
+			await member.kick(reason='bot :D')
+			return
+		chanfound = False
 		for server in Main.bot.guilds:
+			print(f"searching server {server.name}")
 			if server == member.guild:
-				for channel in server:
-					if channel.name == 'welcomes':
-						await channel.send(f'Welcome to {server.name}! Hope you have fun here!')
+				print("server found")
+				for channel in server.channels:
+					if chanfound:
+						return
+					elif not chanfound:
+						print(f"serching channel {channel.name}")
+						if channel.name == 'welcomes':
+							chanfound = True
+							print("found channel")
+							embed=discord.Embed(title="Welcome!", color=discord.Colour.random(seed=(str(member))))
+							embed.set_thumbnail(url=member.avatar_url)
+							embed.add_field(name=f"Welcome to {server.name}", value=f"You are the {(len(server.members)-15)} attendee here! Head to #rules to read and accept, and become a part of this convention! The next convention is Oct. 14-16! We hope you have fun here!")
+							await asyncio.sleep(0.2)
+							await channel.send(embed=embed)
+							print("message sent")
+		print("creating dm")
 		await member.create_dm()
+		print("sending message")
 		await member.dm_channel.send(f"Why hello there {member.name}! Welcome!")
+		print("message sent")
+		print("member joined")
 
 	#this is when something bad happens in a command
 	#it lets me know what went wrong, and possibly keeps the bot from crashing
@@ -158,31 +184,43 @@ class Main():
 	async def on_message(message):
 		if message.channel.type == discord.ChannelType.private and not message.author == Main.bot.user:
 			return await Main.dmcheck(message)
-		if message.channel.name.lower() in BotSettings.ignoreChannels:
-			return
 		if message.author == Main.bot.user:
 			return
-		for word in message.content.split():
-			if word in BotSettings.badwords:
+		if message.channel.name.lower() in BotSettings.ignoreChannels:
+			return
+		#just detect an @everyone for now...
+		if not message.content.lower().find("@everyone") == -1:
+			if not message.channel in BotSettings.ignoreChannels:
+				print("someone @everyone...")
 				time.sleep(0.5)
-				await message.delete() #if so, delete the message
-		if message.content.startswith(f'{BotSettings.prefix}help'):
+				await message.delete()
+		'''
+		Disable this for now until I find a better way of detection
+		if not message.channel.nsfw:
+			for badword in BotSettings.badwords:
+				messagecont = message.content.lower().replace(' ', '')
+				if not messagecont.find(badword) == -1:
+					print(f'found word {badword}')
+					time.sleep(0.5)
+					await message.delete() #if so, delete the message
+		'''
+		if message.content.lower().startswith(f'{BotSettings.prefix} help'):
 			destination = message.channel
-			category = message.content
+			category = message.content.lower()
 			commno = 0
-			if category == f'{BotSettings.prefix}help':
+			if category == f'{BotSettings.prefix} help':
 				embed = discord.Embed(title='Help!', description='These are the categories.', colour=discord.Colour.red())
 				print(Main.bot.cogs)
 				for cog in Main.bot.cogs:
 					print(cog)
 					embed.add_field(name=cog, value=Main.bot.cogs[cog].description)
-				embed.set_footer(text='type (prefix)help (category) for info on a category \neg. h!help Furry Commands (capitalization is important for now)')
+				embed.set_footer(text='type (prefix) help (category) for info on a category \neg. tec help Furry Commands')
 			else:
-				if len(Main.bot.cogs[category[5+len(BotSettings.prefix):]].get_commands()) > 25:
+				if len(Main.bot.cogs[category[6+len(BotSettings.prefix):].title()].get_commands()) > 25:
 					commno = 0
 					embed = discord.Embed(title='Help!', description=f'Commands in {category}', colour=discord.Colour.red())
 					embed2 = discord.Embed(title='Help! (cont.)', description=f'Commands in {category}', colour=discord.Colour.red())
-					for command in Main.bot.cogs[category[5+len(BotSettings.prefix):]].get_commands():
+					for command in Main.bot.cogs[category[6+len(BotSettings.prefix):].title()].get_commands():
 						print(command)
 						commno += 1
 						if commno > 25:
@@ -191,7 +229,7 @@ class Main():
 							embed.add_field(name=command, value=command.help)
 				else:
 					embed = discord.Embed(title='Help!', description=f'Commands in {category}', colour=discord.Colour.red())
-					for command in Main.bot.cogs[category[5+len(BotSettings.prefix):]].get_commands():
+					for command in Main.bot.cogs[category[6+len(BotSettings.prefix):].title()].get_commands():
 						print(command)
 						embed.add_field(name=command, value=command.help)
 			print(embed)
