@@ -208,6 +208,8 @@ class Main():
 		if message.content.lower().startswith('hi') or message.content.lower().startswith('hello') or message.content.lower().startswith('hai') or message.content.lower().startswith('hey') or message.content.lower().startswith('hei') or message.content.lower().startswith('helo'):
 			responses = ["Hi!", "Hello!", "Hihi!", "Hai!", "Hey!"]
 			await message.channel.send(random.choice(responses))
+		if (message.content.lower().strip() == 'tec') and (len(message.content.strip()) == 3):
+			await message.channel.send("Yes?")
 		if message.content.lower().startswith(f'{BotSettings.prefix} help'):
 			destination = message.channel
 			category = message.content.lower()
@@ -252,7 +254,6 @@ class Main():
 			Main.bot.load_extension(extension)  # Loades every extension.
 
 #----the startup section----#
-#first start a websocket to be pinged to keep the bot up
 #get the bot token to log in with
 #use the command loading function to load commands
 #and finally start the bot!
