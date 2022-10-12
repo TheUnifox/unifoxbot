@@ -33,11 +33,11 @@ class Events(commands.Cog, name="Events Commands", description="Commands for The
     @commands.command(name="addevent", help="register to be pinged for an event. ex. tec addevent opening")
     async def addevent(self, ctx, *, eventname, extra = None):
         try:
-            BotSettings.eventpings[eventname] += f", {ctx.author.mention}"
+            BotSettings.eventpings[eventname] += f", {ctx.author.mention}>"
             BotSettings.botSettingsToSave['eventpings'][eventname] = BotSettings.eventpings[eventname]
             BotSettings.quietSave()
         except:
-            BotSettings.eventpings[eventname] = f"{ctx.author.mention}"
+            BotSettings.eventpings[eventname] = f"{ctx.author.mention}>"
             BotSettings.botSettingsToSave['eventpings'][eventname] = BotSettings.eventpings[eventname]
             BotSettings.quietSave()
         await ctx.send(f"{eventname} has been added to your list {ctx.author.mention}!")
