@@ -33,23 +33,23 @@ class Events(commands.Cog, name="Events Commands", description="Commands for The
     @commands.command(name="addevent", help="register to be pinged for an event. ex. tec addevent opening")
     async def addevent(self, ctx, *, eventname, extra = None):
         try:
-            BotSettings.eventpings[eventname] += f", @{ctx.author.name}"
+            BotSettings.eventpings[eventname] += f", {ctx.author.mention}"
             BotSettings.botSettingsToSave['eventpings'][eventname] = BotSettings.eventpings[eventname]
             BotSettings.quietSave()
         except:
-            BotSettings.eventpings[eventname] = f"@{ctx.author.name}"
+            BotSettings.eventpings[eventname] = f"{ctx.author.mention}"
             BotSettings.botSettingsToSave['eventpings'][eventname] = BotSettings.eventpings[eventname]
             BotSettings.quietSave()
-        await ctx.send(f"{eventname} has been added to your list @{ctx.author.name}!")
+        await ctx.send(f"{eventname} has been added to your list {ctx.author.mention}!")
 
     @commands.command(name="removeEvent", help="remove an event from your list. ex. tec removeevent puttputt")
     async def removeEvent(self, ctx, *, eventname, extra = None):
         templist = BotSettings.eventpings[eventname]
-        templist = templist.replace(f", @{ctx.author.name}", "")
+        templist = templist.replace(f", {ctx.author.mention}", "")
         BotSettings.eventpings[eventname] = templist
         BotSettings.botSettingsToSave['eventpings'][eventname] = BotSettings.eventpings[eventname]
         BotSettings.quietSave()
-        await ctx.send(f"{eventname} has been removed from your list @{ctx.author.name}!")
+        await ctx.send(f"{eventname} has been removed from your list {ctx.author.mention}!")
 
     @commands.command(name="pingfor", help="Used by staff to ping for an event!")
     @commands.has_any_role('admin', 'owner', 'Staff')
