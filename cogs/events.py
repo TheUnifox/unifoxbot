@@ -19,7 +19,7 @@ class Events(commands.Cog, name="Events Commands", description="Commands for The
         cs = aiohttp.ClientSession()
         r = await cs.get("https://tec-site.herokuapp.com/events/api")
         if r.status == 200:
-            data = r.json()
+            data = await r.json()
             embed = discord.Embed(title="Events:", color=ctx.author.color)
             for event in data:
                 embed.add_field(name=event)
