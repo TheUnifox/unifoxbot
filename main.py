@@ -49,7 +49,8 @@ class Main():
 		'cogs.music',
 		'cogs.general',
 		'cogs.search',
-		'cogs.furry'
+		'cogs.furry',
+		'cogs.events'
 	]
 
 	#---events---#

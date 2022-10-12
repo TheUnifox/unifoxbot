@@ -128,8 +128,26 @@ class BotSettings():
 	except:
 		print('no clear ignores')
 
+	eventpings = dict()
+	try:
+		eventpings = botSettings['eventpings']
+		eventpings1 = list()
+		for char in eventpings:
+			if char == '=':
+				eventpings1.append(':')
+			elif char == '>':
+				eventpings1.append(' ')
+			else:
+				eventpings1.append(char)
+		eventpings = ''.join(eventpings1)
+		eventpingsfinal = ast.literal_eval(eventpings)
+		eventpings = eventpingsfinal
+		print(eventpings)
+	except:
+		print('empty eventpings')
+
 	#a list of tuples to store the settings
-	botSettingsToSave = {'prefix' : prefix, 'warnlist' : warnlist, 'musicVol' : str(setVolume), 'warnlimit' : str(warnlimit), 'ignoreChannels' : ignoreChannels, 'badwords' : badwords, 'timeoutChanindex' : str(timeoutChanindex), 'announceChannels' : announceChannels, 'clearIgnore' : clearIgnore}
+	botSettingsToSave = {'prefix' : prefix, 'warnlist' : warnlist, 'musicVol' : str(setVolume), 'warnlimit' : str(warnlimit), 'ignoreChannels' : ignoreChannels, 'badwords' : badwords, 'timeoutChanindex' : str(timeoutChanindex), 'announceChannels' : announceChannels, 'clearIgnore' : clearIgnore, 'eventpings' : eventpings}
 	
 	#---settings saving functions---#
 	#to set the prefix
