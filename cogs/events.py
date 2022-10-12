@@ -46,7 +46,7 @@ class Events(commands.Cog, name="Events Commands", description="Commands for The
     async def removeEvent(self, ctx, *, eventname, extra = None):
         templist = BotSettings.eventpings[eventname]
         templist = templist.replace(f", {ctx.author.mention.replace('>', '')}", "")
-        BotSettings.eventpings[eventname] = templist
+        BotSettings.eventpings[eventname] = templist.strip()
         BotSettings.botSettingsToSave['eventpings'][eventname] = BotSettings.eventpings[eventname]
         BotSettings.quietSave()
         await ctx.send(f"{eventname} has been removed from your list {ctx.author.mention}!")
@@ -68,7 +68,7 @@ class Events(commands.Cog, name="Events Commands", description="Commands for The
                         embed=discord.Embed(title="Time for the next event!", color=discord.Colour.random())
                         embed.add_field(name=f"The next event is {event}!", value=extra)
                         await asyncio.sleep(0.2)
-                        await channel.send( BotSettings.eventpings[event].replace(" , ", ">, "), embed=embed)
+                        await channel.send( f"{BotSettings.eventpings[event].replace(' , ', '>, ')}>", embed=embed)
                         print("message sent")
 
 
