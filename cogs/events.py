@@ -31,7 +31,7 @@ class Events(commands.Cog, name="Events Commands", description="Commands for The
         await cs.close()
 
     @commands.command(name="addevent", help="register to be pinged for an event. ex. tec addevent opening")
-    async def addevent(self, ctx, *, eventname, extra):
+    async def addevent(self, ctx, *, eventname, extra = None):
         try:
             BotSettings.eventpings[eventname] += f", @{ctx.author.name}"
             BotSettings.botSettingsToSave['eventpings'][eventname] = BotSettings.eventpings[eventname]
@@ -43,7 +43,7 @@ class Events(commands.Cog, name="Events Commands", description="Commands for The
         await ctx.send(f"{eventname} has been added to your list @{ctx.author.name}!")
 
     @commands.command(name="removeEvent", help="remove an event from your list. ex. tec removeevent puttputt")
-    async def removeEvent(self, ctx, *, eventname, extra):
+    async def removeEvent(self, ctx, *, eventname, extra = None):
         templist = BotSettings.eventpings[eventname]
         templist = templist.replace(f", @{ctx.author.name}", "")
         BotSettings.eventpings[eventname] = templist
