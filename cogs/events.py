@@ -21,8 +21,10 @@ class Events(commands.Cog, name="Events Commands", description="Commands for The
         if r.status == 200:
             data = await r.json(content_type='text/plain')
             embed = discord.Embed(title="Events:", color=ctx.author.color)
+            eventnum = 0
             for event in data:
-                embed.add_field(name=event, value="")
+                eventnum += 1
+                embed.add_field(name=f"event #{eventnum}", value=event)
             await ctx.send(embed=embed)
         else:
             await ctx.send(f'Problem status: {r.status}')
