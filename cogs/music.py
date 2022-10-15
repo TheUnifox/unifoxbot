@@ -24,7 +24,9 @@ class MusicCommands(commands.Cog, name="Music Commands", description='Commands f
 	@commands.command(name='join', help='connects bot to your current vc')
 	async def connect(self, ctx):
 		await ctx.send("connecting...")
+		print(ctx.author.voice)
 		connected = ctx.author.voice
+		print(connected)
 		if not connected:
 			await ctx.send("You need to be connected in a voice channel to use this command!")
 			return
